@@ -1734,7 +1734,7 @@ function getCSSVar(v){return getComputedStyle(document.documentElement).getPrope
 function renderUpcomingBills(){
   const cont=document.getElementById('upcoming-bills-list');
   const today2=new Date();today2.setHours(0,0,0,0);
-  const soon=state.bills.filter(b=>b.status!=='paid'&&b.tipo!=='done').map(b=>({b,dv:getBillDueDate(b)})).filter(x=>x.dv).sort((a,b)=>a.dv.localeCompare(b.dv)).slice(0,4);
+  const soon=state.bills.filter(b=>getBillStatus(b)!=='paid').map(b=>({b,dv:getBillDueDate(b)})).filter(x=>x.dv).sort((a,b)=>a.dv.localeCompare(b.dv)).slice(0,4);
   if(!soon.length){cont.innerHTML=`<div class="empty-state" style="padding:24px"><i class="fas fa-check-circle"></i><p>Nenhum boleto próximo 🎉</p></div>`;return}
   cont.innerHTML=soon.map(({b,dv})=>{
     const dvDate=new Date(dv+'T00:00:00');
@@ -2142,7 +2142,7 @@ function renderBills(){
   switch(state.billFilter){
     case'pending':bills=bills.filter(b=>getBillStatus(b)==='pending');break;
     case'overdue':bills=bills.filter(b=>getBillStatus(b)==='overdue');break;
-    case'paid':bills=bills.filter(b=>b.status==='paid');break;
+    case'paid':bills=bills.filter(b=>b.status==='paid'||b.tipo==='done');break;
     case'expensive':bills.sort((a,b)=>b.valor-a.valor);break;
     case'ending':bills=bills.filter(b=>b.tipo==='parcelado'&&(b.totalParcelas-b.parcAtual)<=2);break;
     default:bills=bills.filter(b=>b.tipo!=='done');
@@ -2302,7 +2302,7 @@ function markPaid(id){
   }else{
     state.bills[idx].status='paid';
     toast(`${b.nome} marcado como pago ✅`);
-    setTimeout(()=>{state.bills[idx].status='pending';saveState();},1000*60*60*24*30);// reset monthly
+    // Monthly bills stay 'paid' until user manually resets via 'Desfazer'
   }
   saveState();renderBills();renderMiniCal();renderDashboard();
 }
@@ -2526,173 +2526,6 @@ document.getElementById('confirm-action-btn').addEventListener('click',()=>{
 /* ============================================================
    INITIAL LOAD
    ============================================================ */
-
-/* ============================================================
-   BOLETOS / PARCELAS - SISTEMA REFEITO V7
-   ============================================================ */
-
-function renderBills() {
-    const container = document.getElementById('bills-list');
-    if (!container) return;
-    
-    const currentFilter = state.billFilter || 'all';
-    const now = new Date();
-    now.setHours(0,0,0,0);
-
-    let list = (state.bills || []).filter(b => {
-        // Lógica de Status Infalível
-        const isPaid = b.paid === true || b.pago === true;
-        
-        // Data de vencimento
-        let dvDate = null;
-        if(b.dueDate) dvDate = new Date(b.dueDate + 'T12:00:00');
-        else if(b.diaVenc) {
-            const y = now.getFullYear();
-            const m = now.getMonth() + 1;
-            dvDate = new Date(y, m-1, parseInt(b.diaVenc), 12, 0, 0);
-        }
-
-        const isOverdue = dvDate && dvDate < now && !isPaid;
-        const status = isPaid ? 'paid' : (isOverdue ? 'overdue' : 'pending');
-
-        if (currentFilter === 'all') return true;
-        return status === currentFilter;
-    });
-
-    if (list.length === 0) {
-        container.innerHTML = '<div class="empty-state"><h3>Sem boletos nesta categoria</h3></div>';
-        return;
-    }
-
-    container.innerHTML = list.map(b => {
-        const isPaid = b.paid === true || b.pago === true;
-        let dvDate = null;
-        if(b.dueDate) dvDate = new Date(b.dueDate + 'T12:00:00');
-        const isOverdue = dvDate && dvDate < now && !isPaid;
-        
-        const statusType = isPaid ? 'pago' : (isOverdue ? 'atrasado' : 'pendente');
-        const badgeText = isPaid ? 'PAGO' : (isOverdue ? 'ATRASADO' : 'PENDENTE');
-        const icon = isPaid ? 'fa-check-circle' : (isOverdue ? 'fa-exclamation-circle' : 'fa-clock');
-        
-        const valor = b.valor || b.amount || 0;
-        const vencStr = b.dueDate ? formatDate(b.dueDate) : (b.diaVenc ? `Todo dia ${b.diaVenc}` : 'Não definida');
-
-        return `
-        <div class="bill-card-v7">
-            <div class="bill-status-line line-${statusType}"></div>
-            <div class="bill-top">
-                <div class="bill-title-group">
-                    <h4>${b.nome || b.name || 'Sem nome'}</h4>
-                    <span class="bill-category-tag"><i class="fas fa-tag"></i> ${b.categoria || 'Geral'}</span>
-                </div>
-                <div class="bill-price">${formatCurrency(valor)}</div>
-            </div>
-            
-            <div class="bill-mid">
-                <div class="mid-item">
-                    <span class="mid-label">Vencimento</span>
-                    <span class="mid-value">${vencStr}</span>
-                </div>
-                <div class="mid-item">
-                    <span class="mid-label">Parcela</span>
-                    <span class="mid-value">${b.tipo === 'parcelado' ? `${b.parcAtual}/${b.totalParcelas}` : 'Única'}</span>
-                </div>
-            </div>
-
-            <div class="bill-bottom">
-                <span class="status-label-v7 sl-${statusType}">
-                    <i class="fas ${icon}"></i> ${badgeText}
-                </span>
-                <div class="bill-actions-v7">
-                    <button class="btn-v7 ${isPaid ? 'btn-v7-undo' : 'btn-v7-pay'}" onclick="handleTogglePay('${b.id}')" title="${isPaid ? 'Desfazer' : 'Pagar'}">
-                        <i class="fas ${isPaid ? 'fa-undo' : 'fa-check'}"></i>
-                    </button>
-                    <button class="btn-v7 btn-v7-edit" onclick="openBillModal('${b.id}')"><i class="fas fa-pen"></i></button>
-                    <button class="btn-v7 btn-v7-del" onclick="deleteBill('${b.id}')"><i class="fas fa-trash"></i></button>
-                </div>
-            </div>
-        </div>`;
-    }).join('');
-}
-
-function handleTogglePay(id) {
-    const b = state.bills.find(x => x.id === id);
-    if (!b) return;
-    const newState = !(b.paid || b.pago);
-    b.paid = newState;
-    b.pago = newState;
-    saveState();
-    renderBills();
-    if(window.renderDashboard) renderDashboard();
-    showToast(newState ? "Pagamento confirmado! 💚" : "Pagamento removido.");
-}
-
-function setBillFilter(el, filter) {
-    document.querySelectorAll('#bill-filters .filter-chip').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-    state.billFilter = filter;
-    renderBills();
-}
-
-function openBillModal(id = null) {
-    state.editingBill = id;
-    document.getElementById('bill-modal-title').textContent = id ? 'Editar Boleto' : 'Novo Boleto';
-    if(id) {
-        const b = state.bills.find(x => x.id === id);
-        if(b) {
-            document.getElementById('bill-nome').value = b.nome || b.name || '';
-            document.getElementById('bill-cat').value = b.categoria || b.category || 'Geral';
-            document.getElementById('bill-tipo').value = b.tipo || 'unico';
-            document.getElementById('bill-valor').value = formatCurrency(b.valor || b.amount || 0);
-        }
-    } else {
-        document.getElementById('bill-form').reset();
-    }
-    openModal('bill-modal');
-}
-
-
-function toggleBillTypeFields() {
-    const tipo = document.getElementById('bill-tipo').value;
-    document.getElementById('parcelado-fields').style.display = tipo === 'parcelado' ? 'block' : 'none';
-}
-
-function saveBill(e) {
-    e.preventDefault();
-    
-    const valorRaw = document.getElementById('bill-valor').value;
-    const valor = parseFloat(valorRaw.replace(/[R$\.\s]/g, '').replace(',', '.')) || 0;
-    
-    const newBill = {
-        id: state.editingBill || Date.now().toString(),
-        nome: document.getElementById('bill-nome').value,
-        categoria: document.getElementById('bill-cat').value,
-        valor: valor,
-        tipo: document.getElementById('bill-tipo').value,
-        diaVenc: document.getElementById('bill-dia').value,
-        parcAtual: parseInt(document.getElementById('bill-parc-atual').value) || 1,
-        totalParcelas: parseInt(document.getElementById('bill-parc-total').value) || 1,
-        paid: false,
-        pago: false,
-        dueDate: null // A lógica do renderBills calcula com base no diaVenc
-    };
-
-    if (state.editingBill) {
-        const index = state.bills.findIndex(b => b.id === state.editingBill);
-        if (index !== -1) state.bills[index] = newBill;
-    } else {
-        state.bills.push(newBill);
-    }
-
-    saveState();
-    closeModal('bill-modal');
-    renderBills();
-    if(window.renderDashboard) renderDashboard();
-    showToast("Boleto salvo com sucesso!");
-}
-
-// Garante que o botão de "Adicionar" (+) na UI chame a função correta
-// Geralmente o botão tem onclick="openBillModal()"
 
 function init(){
   applyTheme(state.theme);
