@@ -621,6 +621,14 @@ html,body,.view,*{max-width:100%}
 .card,.summary-card,.bill-card,.goal-card{will-change:transform}
 canvas{max-width:100%!important;height:auto!important}
 
+
+.tab-bar {
+  padding-bottom: calc(15px + env(safe-area-inset-bottom));
+  height: calc(75px + env(safe-area-inset-bottom));
+}
+body {
+  padding-bottom: calc(90px + env(safe-area-inset-bottom));
+}
 </style>
 </head>
 <body>
@@ -1971,13 +1979,14 @@ function getBillDueDate(b){
   return`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
 }
 
-function getBillStatus(b){
-  if(b.status === 'paid' || b.tipo === 'done') return 'paid';
-  const today = new Date(); today.setHours(0,0,0,0);
+function getBillStatus(b) {
+  if (b.status === 'paid' || b.tipo === 'done' || b.pago === true) return 'paid';
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
   const dv = getBillDueDate(b);
-  if(!dv) return 'pending';
+  if (!dv) return 'pending';
   const dvDate = new Date(dv + 'T00:00:00');
-  if(dvDate < today) return 'overdue';
+  if (dvDate < today) return 'overdue';
   return 'pending';
 }
 
