@@ -1972,14 +1972,13 @@ function getBillDueDate(b){
 }
 
 function getBillStatus(b){
-  if(b.tipo==='done')return'done';
-  if(b.status==='paid')return'paid';
-  const dv=getBillDueDate(b);
-  if(!dv)return'pending';
-  const today2=new Date();today2.setHours(0,0,0,0);
-  const dvDate=new Date(dv+'T00:00:00');
-  if(dvDate<today2)return'overdue';
-  return'pending';
+  if(b.status === 'paid' || b.tipo === 'done') return 'paid';
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dv = getBillDueDate(b);
+  if(!dv) return 'pending';
+  const dvDate = new Date(dv + 'T00:00:00');
+  if(dvDate < today) return 'overdue';
+  return 'pending';
 }
 
 function renderBills(){
@@ -2045,7 +2044,7 @@ function renderBills(){
         <span class="bill-badge ${badgeClass}">${badgeText}</span>
       </div>
       <div class="bill-info">
-        <div class="bill-info-item"><div class="lbl">Valor</div><div class="val">${fmtMoney(b.valor)}</div></div>
+        <div class="bill-info-item"><div class="lbl">Vencimento</div><div class="val" style="color:var(--primary); font-weight:800;">${fmtDate(dv)}</div></div><div class="bill-info-item"><div class="lbl">Valor</div><div class="val">${fmtMoney(b.valor)}</div></div>
         <div class="bill-info-item"><div class="lbl">Vencimento</div><div class="val">${vencText}</div></div>
         ${parcInfo}
       </div>
