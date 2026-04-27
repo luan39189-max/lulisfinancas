@@ -622,32 +622,48 @@ html,body,.view,*{max-width:100%}
 canvas{max-width:100%!important;height:auto!important}
 
 
-/* Ajuste de Safe Area para Câmera/Notch e Gestos */
-:root {
-  --safe-top: env(safe-area-inset-top, 20px);
-  --safe-bottom: env(safe-area-inset-bottom, 20px);
-}
-
-header {
-  padding-top: var(--safe-top) !important;
-  height: auto !important;
-  min-height: 60px;
-}
-
 .tab-bar {
-  padding-bottom: var(--safe-bottom) !important;
-  height: calc(65px + var(--safe-bottom)) !important;
+  padding-bottom: calc(15px + env(safe-area-inset-bottom));
+  height: calc(75px + env(safe-area-inset-bottom));
 }
-
 body {
-  /* Garante que o conteúdo não fique escondido sob o header ou tab bar */
-  padding-top: 0; 
-  padding-bottom: calc(80px + var(--safe-bottom)) !important;
+  padding-bottom: calc(90px + env(safe-area-inset-bottom));
 }
 
-#app {
-    margin-top: 0;
+/* ESTILOS BOLETOS V5 - REFORMULADOS */
+.bill-card {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.2s ease;
 }
+.bill-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.bill-card.status-pago { border-left: 5px solid var(--primary); }
+.bill-card.status-atrasado { border-left: 5px solid var(--red); }
+.bill-card.status-pendente { border-left: 5px solid var(--yellow); }
+
+.bill-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.bill-name { font-size: 1rem; font-weight: 700; color: var(--text); }
+.bill-cat { font-size: 0.75rem; color: var(--text3); margin-top: 4px; }
+
+.bill-info { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+.bill-info-item .lbl { font-size: 0.65rem; text-transform: uppercase; color: var(--text3); letter-spacing: 0.5px; }
+.bill-info-item .val { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+
+.bill-badge { font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 12px; text-transform: uppercase; }
+.badge-paid { background: var(--green-100); color: var(--green-800); }
+.badge-overdue { background: #fee2e2; color: #991b1b; }
+.badge-pending { background: #fef3c7; color: #92400e; }
+
+.bill-actions { display: flex; gap: 8px; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 12px; }
+.btn-sm { padding: 6px 12px; font-size: 0.75rem; border-radius: 8px; }
+
 </style>
 </head>
 <body>
@@ -669,7 +685,7 @@ body {
         <i class="fas fa-search"></i>
         <input type="text" id="global-search" placeholder="Buscar…" autocomplete="off">
       </div>
-      <button class="header-btn" onclick="toggleTheme()" title="Tema"><i class="fas fa-moon" id="theme-icon"></i></button>
+      
     </div>
   </div>
 </header>
@@ -1873,7 +1889,7 @@ function renderGoals(){
     return;
   }
   cont.innerHTML=state.goals.map(g=>{
-    const pct=Math.min(100,Math.round((g.atual/g.total)*100));
+    const pct = g.total > 0 ? Math.min(100, Math.round((g.atual / g.total) * 100)) : 0;
     const falta=g.total-g.atual;
     const meses=g.prazo||12;
     const porMes=falta>0?falta/meses:0;
@@ -1898,7 +1914,7 @@ function renderGoals(){
         <span class="goal-target">de ${fmtMoney(g.total)}</span>
         ${done?'<span class="bill-badge badge-paid">🎉 Concluída!</span>':''}
       </div>
-      <div class="progress-bar mb-8"><div class="progress-fill ${g.color||'green'}" style="width:${pct}%"></div></div>
+      <div class="progress-bar mb-8"><div class="progress-fill ${g.color||'green'}" style="width: ${pct}%"></div></div>
       <div class="goal-meta">
         <span><b>${pct}%</b> concluído</span>
         ${!done?`<span>Falta: <b>${fmtMoney(falta)}</b></span>`:''}
@@ -1998,29 +2014,16 @@ function getBillDueDate(b){
   return`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
 }
 
-
 function getBillStatus(b) {
-  // Se estiver marcado como pago em qualquer propriedade, retorna pago
-  if (b.status === 'paid' || b.pago === true || b.tipo === 'done') {
-    return 'paid';
-  }
-  
+  if (b.status === 'paid' || b.tipo === 'done' || b.pago === true) return 'paid';
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  
   const dv = getBillDueDate(b);
   if (!dv) return 'pending';
-  
-  const [year, month, day] = dv.split('-').map(Number);
-  const dvDate = new Date(year, month - 1, day);
-  dvDate.setHours(0, 0, 0, 0);
-
-  if (dvDate < today) {
-    return 'overdue';
-  }
+  const dvDate = new Date(dv + 'T00:00:00');
+  if (dvDate < today) return 'overdue';
   return 'pending';
 }
-
 
 function renderBills(){
   // summary
@@ -2052,11 +2055,7 @@ function renderBills(){
   if(!bills.length){cont.innerHTML=`<div class="empty-state"><i class="fas fa-file-invoice-dollar"></i><h3>Nenhum boleto encontrado</h3><p>Toque no + para adicionar.</p></div>`;return}
 
   cont.innerHTML=bills.map(b=>{
-    
-    const status = getBillStatus(b);
-    const badgeClass = status === 'paid' ? 'badge-paid' : (status === 'overdue' ? 'badge-overdue' : 'badge-pending');
-    const badgeLabel = status === 'paid' ? 'Pago' : (status === 'overdue' ? 'Atrasado' : 'Pendente');
-
+    const status=getBillStatus(b);
     const dv=getBillDueDate(b);
     const today2=new Date();today2.setHours(0,0,0,0);
     const dvDate=dv?new Date(dv+'T00:00:00'):null;
@@ -2093,7 +2092,7 @@ function renderBills(){
         <div class="bill-info-item"><div class="lbl">Vencimento</div><div class="val">${vencText}</div></div>
         ${parcInfo}
       </div>
-      ${b.tipo==='parcelado'?`<div class="progress-bar mb-16"><div class="progress-fill ${pct>80?'red':pct>50?'yellow':'green'}" style="width:${pct}%"></div></div>
+      ${b.tipo==='parcelado'?`<div class="progress-bar mb-16"><div class="progress-fill ${pct>80?'red':pct>50?'yellow':'green'}" style="width: ${pct}%"></div></div>
       <div style="font-size:.72rem;color:var(--text3);margin-top:-10px;margin-bottom:12px">${b.parcAtual-1} de ${b.totalParcelas} parcelas pagas (${pct}%)</div>`:''}
       <div class="bill-actions">
         ${status!=='paid'?`<button class="btn btn-primary btn-sm" onclick="markPaid('${b.id}')"><i class="fas fa-check"></i> Pago</button>`:''}
