@@ -350,16 +350,12 @@ textarea.form-control{resize:vertical;min-height:80px}
 /* ============================================================
    BILLS CARDS
    ============================================================ */
-.bill-card{
-  background:var(--card);border-radius:18px;padding:18px;
-  box-shadow:var(--shadow);border:1px solid var(--border);
-  margin-bottom:12px;transition:transform .2s,box-shadow .2s;
-}
+
 .bill-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
 .bill-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
 .bill-name{font-size:1rem;font-weight:700;color:var(--text)}
 .bill-cat{font-size:.75rem;color:var(--text3);margin-top:2px}
-.bill-badge{padding:4px 10px;border-radius:20px;font-size:.72rem;font-weight:700;white-space:nowrap}
+
 .badge-paid{background:#dcfce7;color:#166534}
 .badge-pending{background:#fef3c7;color:#92400e}
 .badge-overdue{background:#fee2e2;color:#991b1b}
@@ -630,39 +626,140 @@ body {
   padding-bottom: calc(90px + env(safe-area-inset-bottom));
 }
 
-/* ESTILOS BOLETOS V5 - REFORMULADOS */
-.bill-card {
-  background: var(--card);
-  border-radius: 18px;
-  padding: 16px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-  margin-bottom: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  transition: all 0.2s ease;
+/* NOVO LAYOUT BOLETOS V7 - TOTALMENTE REFEITO */
+.bills-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-bottom: 20px;
 }
-.bill-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-.bill-card.status-pago { border-left: 5px solid var(--primary); }
-.bill-card.status-atrasado { border-left: 5px solid var(--red); }
-.bill-card.status-pendente { border-left: 5px solid var(--yellow); }
 
-.bill-header { display: flex; justify-content: space-between; align-items: flex-start; }
-.bill-name { font-size: 1rem; font-weight: 700; color: var(--text); }
-.bill-cat { font-size: 0.75rem; color: var(--text3); margin-top: 4px; }
+.bill-card-v7 {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
 
-.bill-info { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
-.bill-info-item .lbl { font-size: 0.65rem; text-transform: uppercase; color: var(--text3); letter-spacing: 0.5px; }
-.bill-info-item .val { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+.bill-card-v7:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
 
-.bill-badge { font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 12px; text-transform: uppercase; }
-.badge-paid { background: var(--green-100); color: var(--green-800); }
-.badge-overdue { background: #fee2e2; color: #991b1b; }
-.badge-pending { background: #fef3c7; color: #92400e; }
+.bill-status-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+}
 
-.bill-actions { display: flex; gap: 8px; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 12px; }
-.btn-sm { padding: 6px 12px; font-size: 0.75rem; border-radius: 8px; }
+.line-pago { background-color: #22c55e; }
+.line-atrasado { background-color: #ef4444; }
+.line-pendente { background-color: #f59e0b; }
+
+.bill-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.bill-title-group h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.bill-category-tag {
+    font-size: 0.72rem;
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+}
+
+.bill-price {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.bill-mid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    background: var(--bg);
+    padding: 10px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.mid-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.mid-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: var(--text3);
+    font-weight: 600;
+}
+
+.mid-value {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.bill-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-label-v7 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.sl-pago { background: #dcfce7; color: #166534; }
+.sl-atrasado { background: #fee2e2; color: #991b1b; }
+.sl-pendente { background: #fef3c7; color: #92400e; }
+
+.bill-actions-v7 {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-v7 {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-v7-pay { background: var(--primary); color: white; }
+.btn-v7-undo { background: #e2e8f0; color: #475569; }
+.btn-v7-edit { background: #f1f5f9; color: #64748b; }
+.btn-v7-del { background: #fff1f2; color: #e11d48; }
 
 </style>
 </head>
@@ -2429,6 +2526,131 @@ document.getElementById('confirm-action-btn').addEventListener('click',()=>{
 /* ============================================================
    INITIAL LOAD
    ============================================================ */
+
+/* ============================================================
+   BOLETOS / PARCELAS - SISTEMA REFEITO V7
+   ============================================================ */
+
+function renderBills() {
+    const container = document.getElementById('bills-list');
+    if (!container) return;
+    
+    const currentFilter = state.billFilter || 'all';
+    const now = new Date();
+    now.setHours(0,0,0,0);
+
+    let list = (state.bills || []).filter(b => {
+        // Lógica de Status Infalível
+        const isPaid = b.paid === true || b.pago === true;
+        
+        // Data de vencimento
+        let dvDate = null;
+        if(b.dueDate) dvDate = new Date(b.dueDate + 'T12:00:00');
+        else if(b.diaVenc) {
+            const y = now.getFullYear();
+            const m = now.getMonth() + 1;
+            dvDate = new Date(y, m-1, parseInt(b.diaVenc), 12, 0, 0);
+        }
+
+        const isOverdue = dvDate && dvDate < now && !isPaid;
+        const status = isPaid ? 'paid' : (isOverdue ? 'overdue' : 'pending');
+
+        if (currentFilter === 'all') return true;
+        return status === currentFilter;
+    });
+
+    if (list.length === 0) {
+        container.innerHTML = '<div class="empty-state"><h3>Sem boletos nesta categoria</h3></div>';
+        return;
+    }
+
+    container.innerHTML = list.map(b => {
+        const isPaid = b.paid === true || b.pago === true;
+        let dvDate = null;
+        if(b.dueDate) dvDate = new Date(b.dueDate + 'T12:00:00');
+        const isOverdue = dvDate && dvDate < now && !isPaid;
+        
+        const statusType = isPaid ? 'pago' : (isOverdue ? 'atrasado' : 'pendente');
+        const badgeText = isPaid ? 'PAGO' : (isOverdue ? 'ATRASADO' : 'PENDENTE');
+        const icon = isPaid ? 'fa-check-circle' : (isOverdue ? 'fa-exclamation-circle' : 'fa-clock');
+        
+        const valor = b.valor || b.amount || 0;
+        const vencStr = b.dueDate ? formatDate(b.dueDate) : (b.diaVenc ? `Todo dia ${b.diaVenc}` : 'Não definida');
+
+        return `
+        <div class="bill-card-v7">
+            <div class="bill-status-line line-${statusType}"></div>
+            <div class="bill-top">
+                <div class="bill-title-group">
+                    <h4>${b.nome || b.name || 'Sem nome'}</h4>
+                    <span class="bill-category-tag"><i class="fas fa-tag"></i> ${b.categoria || 'Geral'}</span>
+                </div>
+                <div class="bill-price">${formatCurrency(valor)}</div>
+            </div>
+            
+            <div class="bill-mid">
+                <div class="mid-item">
+                    <span class="mid-label">Vencimento</span>
+                    <span class="mid-value">${vencStr}</span>
+                </div>
+                <div class="mid-item">
+                    <span class="mid-label">Parcela</span>
+                    <span class="mid-value">${b.tipo === 'parcelado' ? `${b.parcAtual}/${b.totalParcelas}` : 'Única'}</span>
+                </div>
+            </div>
+
+            <div class="bill-bottom">
+                <span class="status-label-v7 sl-${statusType}">
+                    <i class="fas ${icon}"></i> ${badgeText}
+                </span>
+                <div class="bill-actions-v7">
+                    <button class="btn-v7 ${isPaid ? 'btn-v7-undo' : 'btn-v7-pay'}" onclick="handleTogglePay('${b.id}')" title="${isPaid ? 'Desfazer' : 'Pagar'}">
+                        <i class="fas ${isPaid ? 'fa-undo' : 'fa-check'}"></i>
+                    </button>
+                    <button class="btn-v7 btn-v7-edit" onclick="openBillModal('${b.id}')"><i class="fas fa-pen"></i></button>
+                    <button class="btn-v7 btn-v7-del" onclick="deleteBill('${b.id}')"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function handleTogglePay(id) {
+    const b = state.bills.find(x => x.id === id);
+    if (!b) return;
+    const newState = !(b.paid || b.pago);
+    b.paid = newState;
+    b.pago = newState;
+    saveState();
+    renderBills();
+    if(window.renderDashboard) renderDashboard();
+    showToast(newState ? "Pagamento confirmado! 💚" : "Pagamento removido.");
+}
+
+function setBillFilter(el, filter) {
+    document.querySelectorAll('#bill-filters .filter-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    state.billFilter = filter;
+    renderBills();
+}
+
+function openBillModal(id = null) {
+    state.editingBill = id;
+    document.getElementById('bill-modal-title').textContent = id ? 'Editar Boleto' : 'Novo Boleto';
+    if(id) {
+        const b = state.bills.find(x => x.id === id);
+        if(b) {
+            document.getElementById('bill-nome').value = b.nome || b.name || '';
+            document.getElementById('bill-cat').value = b.categoria || b.category || 'Geral';
+            document.getElementById('bill-tipo').value = b.tipo || 'unico';
+            document.getElementById('bill-valor').value = formatCurrency(b.valor || b.amount || 0);
+        }
+    } else {
+        document.getElementById('bill-form').reset();
+    }
+    openModal('bill-modal');
+}
+
 function init(){
   applyTheme(state.theme);
   updateSettingsUI();
