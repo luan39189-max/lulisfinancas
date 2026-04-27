@@ -622,12 +622,31 @@ html,body,.view,*{max-width:100%}
 canvas{max-width:100%!important;height:auto!important}
 
 
-.tab-bar {
-  padding-bottom: calc(15px + env(safe-area-inset-bottom));
-  height: calc(75px + env(safe-area-inset-bottom));
+/* Ajuste de Safe Area para Câmera/Notch e Gestos */
+:root {
+  --safe-top: env(safe-area-inset-top, 20px);
+  --safe-bottom: env(safe-area-inset-bottom, 20px);
 }
+
+header {
+  padding-top: var(--safe-top) !important;
+  height: auto !important;
+  min-height: 60px;
+}
+
+.tab-bar {
+  padding-bottom: var(--safe-bottom) !important;
+  height: calc(65px + var(--safe-bottom)) !important;
+}
+
 body {
-  padding-bottom: calc(90px + env(safe-area-inset-bottom));
+  /* Garante que o conteúdo não fique escondido sob o header ou tab bar */
+  padding-top: 0; 
+  padding-bottom: calc(80px + var(--safe-bottom)) !important;
+}
+
+#app {
+    margin-top: 0;
 }
 </style>
 </head>
@@ -650,7 +669,7 @@ body {
         <i class="fas fa-search"></i>
         <input type="text" id="global-search" placeholder="Buscar…" autocomplete="off">
       </div>
-      
+      <button class="header-btn" onclick="toggleTheme()" title="Tema"><i class="fas fa-moon" id="theme-icon"></i></button>
     </div>
   </div>
 </header>
@@ -1854,7 +1873,7 @@ function renderGoals(){
     return;
   }
   cont.innerHTML=state.goals.map(g=>{
-    const pct = g.total > 0 ? Math.min(100, Math.round((g.atual / g.total) * 100)) : 0;
+    const pct=Math.min(100,Math.round((g.atual/g.total)*100));
     const falta=g.total-g.atual;
     const meses=g.prazo||12;
     const porMes=falta>0?falta/meses:0;
@@ -1879,7 +1898,7 @@ function renderGoals(){
         <span class="goal-target">de ${fmtMoney(g.total)}</span>
         ${done?'<span class="bill-badge badge-paid">🎉 Concluída!</span>':''}
       </div>
-      <div class="progress-bar mb-8"><div class="progress-fill ${g.color||'green'}" style="width: ${pct}%"></div></div>
+      <div class="progress-bar mb-8"><div class="progress-fill ${g.color||'green'}" style="width:${pct}%"></div></div>
       <div class="goal-meta">
         <span><b>${pct}%</b> concluído</span>
         ${!done?`<span>Falta: <b>${fmtMoney(falta)}</b></span>`:''}
@@ -1979,16 +1998,29 @@ function getBillDueDate(b){
   return`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
 }
 
+
 function getBillStatus(b) {
-  if (b.status === 'paid' || b.tipo === 'done' || b.pago === true) return 'paid';
+  // Se estiver marcado como pago em qualquer propriedade, retorna pago
+  if (b.status === 'paid' || b.pago === true || b.tipo === 'done') {
+    return 'paid';
+  }
+  
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+  
   const dv = getBillDueDate(b);
   if (!dv) return 'pending';
-  const dvDate = new Date(dv + 'T00:00:00');
-  if (dvDate < today) return 'overdue';
+  
+  const [year, month, day] = dv.split('-').map(Number);
+  const dvDate = new Date(year, month - 1, day);
+  dvDate.setHours(0, 0, 0, 0);
+
+  if (dvDate < today) {
+    return 'overdue';
+  }
   return 'pending';
 }
+
 
 function renderBills(){
   // summary
@@ -2020,7 +2052,11 @@ function renderBills(){
   if(!bills.length){cont.innerHTML=`<div class="empty-state"><i class="fas fa-file-invoice-dollar"></i><h3>Nenhum boleto encontrado</h3><p>Toque no + para adicionar.</p></div>`;return}
 
   cont.innerHTML=bills.map(b=>{
-    const status=getBillStatus(b);
+    
+    const status = getBillStatus(b);
+    const badgeClass = status === 'paid' ? 'badge-paid' : (status === 'overdue' ? 'badge-overdue' : 'badge-pending');
+    const badgeLabel = status === 'paid' ? 'Pago' : (status === 'overdue' ? 'Atrasado' : 'Pendente');
+
     const dv=getBillDueDate(b);
     const today2=new Date();today2.setHours(0,0,0,0);
     const dvDate=dv?new Date(dv+'T00:00:00'):null;
@@ -2057,7 +2093,7 @@ function renderBills(){
         <div class="bill-info-item"><div class="lbl">Vencimento</div><div class="val">${vencText}</div></div>
         ${parcInfo}
       </div>
-      ${b.tipo==='parcelado'?`<div class="progress-bar mb-16"><div class="progress-fill ${pct>80?'red':pct>50?'yellow':'green'}" style="width: ${pct}%"></div></div>
+      ${b.tipo==='parcelado'?`<div class="progress-bar mb-16"><div class="progress-fill ${pct>80?'red':pct>50?'yellow':'green'}" style="width:${pct}%"></div></div>
       <div style="font-size:.72rem;color:var(--text3);margin-top:-10px;margin-bottom:12px">${b.parcAtual-1} de ${b.totalParcelas} parcelas pagas (${pct}%)</div>`:''}
       <div class="bill-actions">
         ${status!=='paid'?`<button class="btn btn-primary btn-sm" onclick="markPaid('${b.id}')"><i class="fas fa-check"></i> Pago</button>`:''}
