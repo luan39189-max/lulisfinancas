@@ -2651,6 +2651,49 @@ function openBillModal(id = null) {
     openModal('bill-modal');
 }
 
+
+function toggleBillTypeFields() {
+    const tipo = document.getElementById('bill-tipo').value;
+    document.getElementById('parcelado-fields').style.display = tipo === 'parcelado' ? 'block' : 'none';
+}
+
+function saveBill(e) {
+    e.preventDefault();
+    
+    const valorRaw = document.getElementById('bill-valor').value;
+    const valor = parseFloat(valorRaw.replace(/[R$\.\s]/g, '').replace(',', '.')) || 0;
+    
+    const newBill = {
+        id: state.editingBill || Date.now().toString(),
+        nome: document.getElementById('bill-nome').value,
+        categoria: document.getElementById('bill-cat').value,
+        valor: valor,
+        tipo: document.getElementById('bill-tipo').value,
+        diaVenc: document.getElementById('bill-dia').value,
+        parcAtual: parseInt(document.getElementById('bill-parc-atual').value) || 1,
+        totalParcelas: parseInt(document.getElementById('bill-parc-total').value) || 1,
+        paid: false,
+        pago: false,
+        dueDate: null // A lógica do renderBills calcula com base no diaVenc
+    };
+
+    if (state.editingBill) {
+        const index = state.bills.findIndex(b => b.id === state.editingBill);
+        if (index !== -1) state.bills[index] = newBill;
+    } else {
+        state.bills.push(newBill);
+    }
+
+    saveState();
+    closeModal('bill-modal');
+    renderBills();
+    if(window.renderDashboard) renderDashboard();
+    showToast("Boleto salvo com sucesso!");
+}
+
+// Garante que o botão de "Adicionar" (+) na UI chame a função correta
+// Geralmente o botão tem onclick="openBillModal()"
+
 function init(){
   applyTheme(state.theme);
   updateSettingsUI();
