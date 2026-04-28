@@ -79,7 +79,7 @@ body{
   overflow-x:hidden;
   width:100%;
   margin:0;
-  padding-bottom:80px; /* space for bottom nav */
+  padding-bottom:80px;
 }
 button{cursor:pointer;border:none;outline:none;font-family:'Inter',sans-serif}
 input,select,textarea{font-family:'Inter',sans-serif;outline:none}
@@ -95,12 +95,8 @@ img{max-width:100%}
    ============================================================ */
 #app-header{
   background:var(--header-bg);
-  width:100%;
-  left:0;
-  right:0;
-  min-height:78px;
-  color:#fff;
-  padding:16px 20px 12px;
+  width:100%;left:0;right:0;min-height:78px;
+  color:#fff;padding:16px 20px 12px;
   position:sticky;top:0;z-index:100;
   box-shadow:0 2px 12px rgba(29,185,84,.3);
 }
@@ -122,12 +118,10 @@ img{max-width:100%}
    ============================================================ */
 #bottom-nav{
   position:fixed;bottom:0;left:0;right:0;
-  background:var(--nav-bg);
-  border-top:1px solid var(--border);
+  background:var(--nav-bg);border-top:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-around;
   padding:8px 0 max(8px,env(safe-area-inset-bottom));
-  z-index:200;
-  box-shadow:0 -4px 20px rgba(0,0,0,.08);
+  z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,.08);
 }
 .nav-item{
   display:flex;flex-direction:column;align-items:center;gap:3px;
@@ -320,7 +314,6 @@ textarea.form-control{resize:vertical;min-height:80px}
 .modal-header h2{font-size:1.15rem;font-weight:800;color:var(--text)}
 .modal-close{background:var(--bg);border:none;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text3);font-size:16px;transition:background .2s}
 .modal-close:hover{background:var(--border)}
-/* center modals on desktop */
 @media(min-width:640px){
   .modal-overlay{align-items:center}
   .modal{border-radius:24px;max-height:85vh}
@@ -346,28 +339,6 @@ textarea.form-control{resize:vertical;min-height:80px}
 .progress-fill.red{background:linear-gradient(90deg,var(--red),#f87171)}
 .progress-fill.blue{background:linear-gradient(90deg,var(--blue),#60a5fa)}
 .progress-fill.yellow{background:linear-gradient(90deg,var(--yellow),#fbbf24)}
-
-/* ============================================================
-   BILLS CARDS
-   ============================================================ */
-
-.bill-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
-.bill-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
-.bill-name{font-size:1rem;font-weight:700;color:var(--text)}
-.bill-cat{font-size:.75rem;color:var(--text3);margin-top:2px}
-
-.badge-paid{background:#dcfce7;color:#166534}
-.badge-pending{background:#fef3c7;color:#92400e}
-.badge-overdue{background:#fee2e2;color:#991b1b}
-.badge-advanced{background:#dbeafe;color:#1e40af}
-[data-theme="dark"] .badge-paid{background:rgba(22,163,74,.2);color:#4ade80}
-[data-theme="dark"] .badge-pending{background:rgba(245,158,11,.2);color:#fbbf24}
-[data-theme="dark"] .badge-overdue{background:rgba(239,68,68,.2);color:#f87171}
-[data-theme="dark"] .badge-advanced{background:rgba(59,130,246,.2);color:#60a5fa}
-.bill-info{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;font-size:.82rem}
-.bill-info-item .lbl{color:var(--text3);font-size:.7rem;text-transform:uppercase;letter-spacing:.4px;font-weight:600}
-.bill-info-item .val{color:var(--text);font-weight:700;margin-top:1px}
-.bill-actions{display:flex;gap:6px;flex-wrap:wrap}
 
 /* ============================================================
    GOALS CARD
@@ -406,11 +377,15 @@ textarea.form-control{resize:vertical;min-height:80px}
 .toast.hide{animation:slideOut .3s ease forwards}
 
 /* ============================================================
-   CATEGORY PILLS
+   BADGE
    ============================================================ */
-.cat-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-.cat-pill{padding:5px 12px;border-radius:20px;font-size:.78rem;font-weight:600;background:var(--bg3);color:var(--text2);border:1px solid var(--border);cursor:pointer;transition:.2s}
-.cat-pill:hover,.cat-pill.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.bill-badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700}
+.badge-paid{background:#dcfce7;color:#166534}
+.badge-pending{background:#fef3c7;color:#92400e}
+.badge-overdue{background:#fee2e2;color:#991b1b}
+[data-theme="dark"] .badge-paid{background:rgba(22,163,74,.2);color:#4ade80}
+[data-theme="dark"] .badge-pending{background:rgba(245,158,11,.2);color:#fbbf24}
+[data-theme="dark"] .badge-overdue{background:rgba(239,68,68,.2);color:#f87171}
 
 /* ============================================================
    TABLE
@@ -421,25 +396,6 @@ textarea.form-control{resize:vertical;min-height:80px}
 .data-table tr:last-child td{border-bottom:none}
 .data-table tr:hover td{background:var(--bg)}
 .table-wrap{overflow-x:auto;border-radius:14px;border:1px solid var(--border);background:var(--card)}
-
-/* ============================================================
-   MINI CALENDAR
-   ============================================================ */
-.mini-cal{background:var(--card);border-radius:18px;padding:16px;box-shadow:var(--shadow);border:1px solid var(--border)}
-.mini-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.mini-cal-header h4{font-size:.95rem;font-weight:700;color:var(--text)}
-.cal-nav{background:var(--bg);border:none;width:30px;height:30px;border-radius:8px;cursor:pointer;color:var(--text2);display:flex;align-items:center;justify-content:center;transition:.2s}
-.cal-nav:hover{background:var(--border)}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
-.cal-day-label{font-size:.65rem;font-weight:700;color:var(--text3);padding:4px 0;text-transform:uppercase}
-.cal-day{font-size:.78rem;padding:5px 2px;border-radius:8px;cursor:default;position:relative;color:var(--text2);font-weight:500}
-.cal-day.today{background:var(--primary);color:#fff;font-weight:700}
-.cal-day.has-bill{background:var(--green-100);color:var(--primary);font-weight:700}
-.cal-day.overdue{background:#fee2e2;color:var(--red);font-weight:700}
-.cal-day.paid-day{background:var(--green-50);color:var(--green-600)}
-[data-theme="dark"] .cal-day.has-bill{background:rgba(29,185,84,.15);color:var(--primary-l)}
-[data-theme="dark"] .cal-day.overdue{background:rgba(239,68,68,.15);color:#f87171}
-.cal-dot{width:4px;height:4px;border-radius:50%;background:var(--primary);position:absolute;bottom:2px;left:50%;transform:translateX(-50%)}
 
 /* ============================================================
    REPORTS STATS ROW
@@ -500,12 +456,7 @@ textarea.form-control{resize:vertical;min-height:80px}
 .empty-state p{font-size:.85rem;line-height:1.6}
 
 /* ============================================================
-   CATEGORY COLOR MAP (icons)
-   ============================================================ */
-.cat-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
-
-/* ============================================================
-   FAB (floating action button)
+   FAB
    ============================================================ */
 .fab{
   position:fixed;bottom:90px;right:20px;
@@ -565,9 +516,6 @@ textarea.form-control{resize:vertical;min-height:80px}
 .sidebar-user .uname{font-size:.85rem;font-weight:700;color:var(--text)}
 .sidebar-user .urole{font-size:.72rem;color:var(--text3)}
 
-/* ============================================================
-   HEADER VISIBLE ONLY MOBILE
-   ============================================================ */
 @media(min-width:900px){
   #app-header{display:none}
   .fab{bottom:30px}
@@ -608,166 +556,17 @@ textarea.form-control{resize:vertical;min-height:80px}
 .hidden{display:none!important}
 .loading-spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* Category dot */
 .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;display:inline-block}
-
 html,body,.view,*{max-width:100%}
 .view{width:100%}
-.card,.summary-card,.bill-card,.goal-card{will-change:transform}
 canvas{max-width:100%!important;height:auto!important}
-
-
-.tab-bar {
-  padding-bottom: calc(15px + env(safe-area-inset-bottom));
-  height: calc(75px + env(safe-area-inset-bottom));
-}
-body {
-  padding-bottom: calc(90px + env(safe-area-inset-bottom));
-}
-
-/* NOVO LAYOUT BOLETOS V7 - TOTALMENTE REFEITO */
-.bills-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding-bottom: 20px;
-}
-
-.bill-card-v7 {
-    background: var(--card);
-    border-radius: 20px;
-    padding: 18px;
-    border: 1px solid var(--border);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.bill-card-v7:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-}
-
-.bill-status-line {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 6px;
-    height: 100%;
-}
-
-.line-pago { background-color: #22c55e; }
-.line-atrasado { background-color: #ef4444; }
-.line-pendente { background-color: #f59e0b; }
-
-.bill-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 12px;
-}
-
-.bill-title-group h4 {
-    margin: 0;
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--text);
-}
-
-.bill-category-tag {
-    font-size: 0.72rem;
-    color: var(--text3);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: 2px;
-}
-
-.bill-price {
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: var(--text);
-}
-
-.bill-mid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    background: var(--bg);
-    padding: 10px;
-    border-radius: 12px;
-    margin-bottom: 15px;
-}
-
-.mid-item {
-    display: flex;
-    flex-direction: column;
-}
-
-.mid-label {
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    color: var(--text3);
-    font-weight: 600;
-}
-
-.mid-value {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--text);
-}
-
-.bill-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.status-label-v7 {
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 5px 12px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.sl-pago { background: #dcfce7; color: #166534; }
-.sl-atrasado { background: #fee2e2; color: #991b1b; }
-.sl-pendente { background: #fef3c7; color: #92400e; }
-
-.bill-actions-v7 {
-    display: flex;
-    gap: 8px;
-}
-
-.btn-v7 {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.btn-v7-pay { background: var(--primary); color: white; }
-.btn-v7-undo { background: #e2e8f0; color: #475569; }
-.btn-v7-edit { background: #f1f5f9; color: #64748b; }
-.btn-v7-del { background: #fff1f2; color: #e11d48; }
-
+.tab-bar{padding-bottom:calc(15px + env(safe-area-inset-bottom));height:calc(75px + env(safe-area-inset-bottom))}
+body{padding-bottom:calc(90px + env(safe-area-inset-bottom))}
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════════════
-     HEADER (mobile)
-════════════════════════════════════════════════════ -->
+<!-- HEADER (mobile) -->
 <header id="app-header">
   <div class="header-inner">
     <div class="header-logo">
@@ -782,14 +581,11 @@ body {
         <i class="fas fa-search"></i>
         <input type="text" id="global-search" placeholder="Buscar…" autocomplete="off">
       </div>
-      
     </div>
   </div>
 </header>
 
-<!-- ════════════════════════════════════════════════════
-     SIDEBAR (desktop)
-════════════════════════════════════════════════════ -->
+<!-- SIDEBAR (desktop) -->
 <nav id="sidebar">
   <div class="sidebar-logo">
     <div class="logo-icon">💚</div>
@@ -803,7 +599,6 @@ body {
     <button class="sidebar-item" data-tab="lancamentos"><i class="fas fa-exchange-alt"></i> Lançamentos</button>
     <button class="sidebar-item" data-tab="relatorios"><i class="fas fa-chart-bar"></i> Relatórios</button>
     <button class="sidebar-item" data-tab="metas"><i class="fas fa-bullseye"></i> Metas</button>
-    <button class="sidebar-item" data-tab="boletos"><i class="fas fa-file-invoice-dollar"></i> Boletos</button>
     <button class="sidebar-item" data-tab="backup"><i class="fas fa-cloud-download-alt"></i> Backup</button>
     <button class="sidebar-item" data-tab="configuracoes"><i class="fas fa-cog"></i> Configurações</button>
   </div>
@@ -818,19 +613,17 @@ body {
   </div>
 </nav>
 
-<!-- ════════════════════════════════════════════════════
-     MAIN VIEWS
-════════════════════════════════════════════════════ -->
+<!-- ════ VIEWS ════ -->
 
-<!-- ──── DASHBOARD ──── -->
+<!-- DASHBOARD -->
 <div class="view active" id="view-dashboard">
-
   <div id="smart-alerts"></div>
-
   <div class="motivational" id="motivational-banner">
     <i class="fas fa-seedling"></i>
-    <div><strong id="motivational-text">Cada real poupado é um passo rumo à liberdade!</strong>
-    <p id="motivational-sub" style="opacity:.85;font-size:.82rem">Continue assim, você está no caminho certo 💚</p></div>
+    <div>
+      <strong id="motivational-text">Cada real poupado é um passo rumo à liberdade!</strong>
+      <p id="motivational-sub" style="opacity:.85;font-size:.82rem">Continue assim, você está no caminho certo 💚</p>
+    </div>
   </div>
 
   <div class="summary-grid">
@@ -860,7 +653,6 @@ body {
     </div>
   </div>
 
-  <!-- Weekly summary + forecast -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
     <div class="card-sm">
       <div style="font-size:.72rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px"><i class="fas fa-calendar-week" style="color:var(--primary)"></i> Esta Semana</div>
@@ -874,7 +666,6 @@ body {
     </div>
   </div>
 
-  <!-- Charts -->
   <div class="charts-grid">
     <div class="chart-card">
       <h3><i class="fas fa-chart-pie"></i> Gastos por Categoria</h3>
@@ -886,19 +677,13 @@ body {
     </div>
   </div>
 
-  <!-- Upcoming bills -->
-  <div class="section-title"><i class="fas fa-bell"></i> Próximos Boletos</div>
-  <div id="upcoming-bills-list" class="mb-16"></div>
-
-  <!-- Recent transactions -->
   <div class="section-title"><i class="fas fa-clock"></i> Últimas Movimentações</div>
   <div id="recent-tx-list" class="tx-list"></div>
 </div>
 
-<!-- ──── LANÇAMENTOS ──── -->
+<!-- LANÇAMENTOS -->
 <div class="view" id="view-lancamentos">
   <div class="section-title"><i class="fas fa-exchange-alt"></i> Lançamentos</div>
-
   <div class="filters-bar">
     <div class="search-bar" style="max-width:220px">
       <i class="fas fa-search"></i>
@@ -917,28 +702,22 @@ body {
       <option value="val-asc">Menor valor</option>
     </select>
   </div>
-
   <div id="tx-list-container" class="tx-list"></div>
-
   <button class="fab" onclick="openTxModal()" title="Novo lançamento"><i class="fas fa-plus"></i></button>
 </div>
 
-<!-- ──── RELATÓRIOS ──── -->
+<!-- RELATÓRIOS -->
 <div class="view" id="view-relatorios">
   <div class="section-title"><i class="fas fa-chart-bar"></i> Relatórios</div>
-
   <div style="margin-bottom:16px">
-    <select class="filter-chip" id="report-month" onchange="renderRelatorios()" style="padding:9px 16px;font-size:.9rem">
-    </select>
+    <select class="filter-chip" id="report-month" onchange="renderRelatorios()" style="padding:9px 16px;font-size:.9rem"></select>
   </div>
-
   <div class="stats-row">
     <div class="stat-card"><div class="stat-val color-green" id="rep-entrada">R$ 0</div><div class="stat-lbl">Entradas</div></div>
     <div class="stat-card"><div class="stat-val color-red" id="rep-saida">R$ 0</div><div class="stat-lbl">Saídas</div></div>
     <div class="stat-card"><div class="stat-val" id="rep-media-dia">R$ 0</div><div class="stat-lbl">Média/dia</div></div>
     <div class="stat-card"><div class="stat-val" id="rep-maior-cat">—</div><div class="stat-lbl">Maior gasto</div></div>
   </div>
-
   <div class="charts-grid">
     <div class="chart-card">
       <h3><i class="fas fa-chart-pie"></i> Por Categoria</h3>
@@ -949,7 +728,6 @@ body {
       <div class="chart-wrap"><canvas id="chart-rep-hist"></canvas></div>
     </div>
   </div>
-
   <div class="flex-between mb-8 mt-16">
     <div class="section-title" style="margin-bottom:0"><i class="fas fa-table"></i> Detalhado</div>
     <button class="btn btn-secondary btn-sm" onclick="exportCSV()"><i class="fas fa-download"></i> CSV</button>
@@ -962,7 +740,7 @@ body {
   </div>
 </div>
 
-<!-- ──── METAS ──── -->
+<!-- METAS -->
 <div class="view" id="view-metas">
   <div class="flex-between mb-16">
     <div class="section-title" style="margin-bottom:0"><i class="fas fa-bullseye"></i> Metas</div>
@@ -971,70 +749,15 @@ body {
   <div id="goals-list"></div>
 </div>
 
-<!-- ──── BOLETOS / PARCELAS ──── -->
-<div class="view" id="view-boletos">
-  <div class="section-title"><i class="fas fa-file-invoice-dollar"></i> Boletos & Parcelas</div>
-
-  <!-- Summary -->
-  <div class="summary-grid" style="grid-template-columns:repeat(2,1fr)" id="bills-summary">
-    <div class="summary-card blue">
-      <div class="sc-icon blue"><i class="fas fa-list-check"></i></div>
-      <div class="sc-label">Boletos Ativos</div>
-      <div class="sc-value" id="bill-count">0</div>
-    </div>
-    <div class="summary-card red">
-      <div class="sc-icon red"><i class="fas fa-coins"></i></div>
-      <div class="sc-label">Total Restante</div>
-      <div class="sc-value" id="bill-total-rest">R$ 0</div>
-    </div>
-    <div class="summary-card purple">
-      <div class="sc-icon purple"><i class="fas fa-calendar-alt"></i></div>
-      <div class="sc-label">Próx. Mês</div>
-      <div class="sc-value" id="bill-next-month">R$ 0</div>
-    </div>
-    <div class="summary-card green">
-      <div class="sc-icon green"><i class="fas fa-check-circle"></i></div>
-      <div class="sc-label">Quitadas Ano</div>
-      <div class="sc-value" id="bill-paid-year">0</div>
-    </div>
-  </div>
-
-  <!-- Mini calendar -->
-  <div class="mini-cal mb-16" id="mini-calendar-wrap">
-    <div class="mini-cal-header">
-      <button class="cal-nav" onclick="calPrev()"><i class="fas fa-chevron-left"></i></button>
-      <h4 id="cal-month-label">—</h4>
-      <button class="cal-nav" onclick="calNext()"><i class="fas fa-chevron-right"></i></button>
-    </div>
-    <div class="cal-grid" id="cal-grid"></div>
-  </div>
-
-  <!-- Filters -->
-  <div class="filters-bar" id="bill-filters">
-    <button class="filter-chip active" data-bill-filter="all" onclick="setBillFilter(this,'all')">Todos</button>
-    <button class="filter-chip" data-bill-filter="pending" onclick="setBillFilter(this,'pending')">Pendente</button>
-    <button class="filter-chip" data-bill-filter="overdue" onclick="setBillFilter(this,'overdue')">Vencidos</button>
-    <button class="filter-chip" data-bill-filter="paid" onclick="setBillFilter(this,'paid')">Pagos</button>
-    <button class="filter-chip" data-bill-filter="expensive" onclick="setBillFilter(this,'expensive')">Mais caros</button>
-    <button class="filter-chip" data-bill-filter="ending" onclick="setBillFilter(this,'ending')">Terminando</button>
-  </div>
-
-  <div id="bills-list"></div>
-
-  <button class="fab" onclick="openBillModal()" title="Novo boleto"><i class="fas fa-plus"></i></button>
-</div>
-
-<!-- ──── BACKUP ──── -->
+<!-- BACKUP -->
 <div class="view" id="view-backup">
   <div class="section-title"><i class="fas fa-cloud-download-alt"></i> Backup & Restauração</div>
-
   <div class="backup-card">
     <div class="backup-icon" style="background:var(--green-100);color:var(--primary)"><i class="fas fa-download"></i></div>
     <h3>Baixar Backup</h3>
     <p>Salve todos os seus dados em um arquivo JSON. Guarde em local seguro para restaurar quando precisar.</p>
     <button class="btn btn-primary" onclick="downloadBackup()"><i class="fas fa-download"></i> Baixar Backup.json</button>
   </div>
-
   <div class="backup-card">
     <div class="backup-icon" style="background:#dbeafe;color:var(--blue)"><i class="fas fa-upload"></i></div>
     <h3>Importar Backup</h3>
@@ -1044,31 +767,26 @@ body {
       <input type="file" id="backup-file" accept=".json" style="display:none" onchange="importBackup(event)">
     </label>
   </div>
-
   <div class="backup-card">
     <div class="backup-icon" style="background:#fee2e2;color:var(--red)"><i class="fas fa-trash-alt"></i></div>
     <h3>Resetar Aplicativo</h3>
     <p>Apaga TODOS os dados permanentemente. Esta ação não pode ser desfeita. Faça backup antes!</p>
     <button class="btn btn-danger" onclick="resetApp()"><i class="fas fa-exclamation-triangle"></i> Resetar Tudo</button>
   </div>
-
   <div class="card mt-16">
     <div class="section-title" style="font-size:1rem"><i class="fas fa-info-circle"></i> O que é salvo no backup?</div>
     <ul style="color:var(--text2);font-size:.85rem;line-height:2">
       <li>✅ Todos os lançamentos</li>
       <li>✅ Categorias personalizadas</li>
-      <li>✅ Boletos e parcelas</li>
-      <li>✅ Histórico de pagamentos</li>
       <li>✅ Metas financeiras</li>
       <li>✅ Configurações e tema</li>
     </ul>
   </div>
 </div>
 
-<!-- ──── CONFIGURAÇÕES ──── -->
+<!-- CONFIGURAÇÕES -->
 <div class="view" id="view-configuracoes">
   <div class="section-title"><i class="fas fa-cog"></i> Configurações</div>
-
   <div class="settings-list">
     <div class="settings-item" onclick="openNameModal()">
       <div class="settings-item-left">
@@ -1119,7 +837,6 @@ body {
       <i class="fas fa-chevron-right settings-arrow"></i>
     </div>
   </div>
-
   <div class="card">
     <div style="text-align:center;color:var(--text3)">
       <div style="font-size:32px;margin-bottom:8px">💚</div>
@@ -1129,22 +846,17 @@ body {
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════════
-     BOTTOM NAV (mobile)
-════════════════════════════════════════════════════ -->
+<!-- BOTTOM NAV (mobile) -->
 <nav id="bottom-nav">
   <button class="nav-item active" data-tab="dashboard"><i class="fas fa-home"></i><span>Início</span></button>
   <button class="nav-item" data-tab="lancamentos"><i class="fas fa-exchange-alt"></i><span>Lançamentos</span></button>
   <button class="nav-item" data-tab="relatorios"><i class="fas fa-chart-bar"></i><span>Relatórios</span></button>
   <button class="nav-item" data-tab="metas"><i class="fas fa-bullseye"></i><span>Metas</span></button>
-  <button class="nav-item" data-tab="boletos"><i class="fas fa-file-invoice-dollar"></i><span>Boletos</span></button>
   <button class="nav-item" data-tab="backup"><i class="fas fa-cloud-download-alt"></i><span>Backup</span></button>
   <button class="nav-item" data-tab="configuracoes"><i class="fas fa-cog"></i><span>Config.</span></button>
 </nav>
 
-<!-- ════════════════════════════════════════════════════
-     MODALS
-════════════════════════════════════════════════════ -->
+<!-- ════ MODALS ════ -->
 
 <!-- Transaction Modal -->
 <div class="modal-overlay" id="tx-modal">
@@ -1154,17 +866,14 @@ body {
       <h2 id="tx-modal-title">Novo Lançamento</h2>
       <button class="modal-close" onclick="closeTxModal()"><i class="fas fa-times"></i></button>
     </div>
-
     <div class="type-toggle mb-16">
       <button class="type-btn active entrada" id="btn-entrada" onclick="setTxType('entrada')"><i class="fas fa-arrow-down"></i> Entrada</button>
       <button class="type-btn saida" id="btn-saida" onclick="setTxType('saida')"><i class="fas fa-arrow-up"></i> Saída</button>
     </div>
-
     <div class="form-group">
       <label class="form-label">Valor</label>
       <input type="text" class="form-control" id="tx-valor" placeholder="R$ 0,00" oninput="maskMoney(this)" inputmode="numeric">
     </div>
-
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Data</label>
@@ -1175,96 +884,16 @@ body {
         <select class="form-control" id="tx-categoria" onchange="handleCatChange()"></select>
       </div>
     </div>
-
     <div class="form-group hidden" id="new-cat-group">
       <label class="form-label">Nova Categoria</label>
       <input type="text" class="form-control" id="tx-new-cat" placeholder="Nome da categoria…">
     </div>
-
     <div class="form-group">
       <label class="form-label">Descrição (opcional)</label>
       <input type="text" class="form-control" id="tx-desc" placeholder="Descreva o lançamento…">
     </div>
-
     <div class="btn-group">
       <button class="btn btn-primary btn-full" onclick="saveTx()"><i class="fas fa-check"></i> Salvar</button>
-    </div>
-  </div>
-</div>
-
-<!-- Bill Modal -->
-<div class="modal-overlay" id="bill-modal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-header">
-      <h2 id="bill-modal-title">Novo Boleto</h2>
-      <button class="modal-close" onclick="closeBillModal()"><i class="fas fa-times"></i></button>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Nome do Boleto</label>
-      <input type="text" class="form-control" id="bill-nome" placeholder="Ex: Financiamento moto">
-    </div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Categoria</label>
-        <select class="form-control" id="bill-cat">
-          <option value="Transporte">🚗 Transporte</option>
-          <option value="Alimentação">🍔 Alimentação</option>
-          <option value="Lazer">🎮 Lazer</option>
-          <option value="Casa">🏠 Casa</option>
-          <option value="Saúde">💊 Saúde</option>
-          <option value="Tecnologia">💻 Tecnologia</option>
-          <option value="Educação">📚 Educação</option>
-          <option value="Dívidas">💳 Dívidas</option>
-          <option value="Outros">📦 Outros</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Tipo</label>
-        <select class="form-control" id="bill-tipo" onchange="handleBillTipo()">
-          <option value="parcelado">Parcelado</option>
-          <option value="recorrente">Mensal Recorrente</option>
-          <option value="unico">Parcela Única</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Valor da Parcela</label>
-        <input type="text" class="form-control" id="bill-valor" placeholder="R$ 0,00" oninput="maskMoney(this)" inputmode="numeric">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Dia Vencimento</label>
-        <input type="number" class="form-control" id="bill-dia-venc" placeholder="Ex: 10" min="1" max="31">
-      </div>
-    </div>
-
-    <div class="form-row" id="bill-parcelas-row">
-      <div class="form-group">
-        <label class="form-label">Total Parcelas</label>
-        <input type="number" class="form-control" id="bill-total-parc" placeholder="Ex: 12" min="1">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Parcela Atual</label>
-        <input type="number" class="form-control" id="bill-parc-atual" placeholder="Ex: 1" min="1">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Data de Início</label>
-      <input type="date" class="form-control" id="bill-inicio">
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Descrição (opcional)</label>
-      <textarea class="form-control" id="bill-desc" placeholder="Detalhes do boleto…"></textarea>
-    </div>
-
-    <div class="btn-group">
-      <button class="btn btn-primary btn-full" onclick="saveBill()"><i class="fas fa-check"></i> Salvar Boleto</button>
     </div>
   </div>
 </div>
@@ -1277,17 +906,14 @@ body {
       <h2 id="goal-modal-title">Nova Meta</h2>
       <button class="modal-close" onclick="closeGoalModal()"><i class="fas fa-times"></i></button>
     </div>
-
     <div class="form-group">
       <label class="form-label">Nome da Meta</label>
       <input type="text" class="form-control" id="goal-nome" placeholder="Ex: Comprar moto">
     </div>
-
     <div class="form-group">
       <label class="form-label">Emoji / Ícone</label>
       <input type="text" class="form-control" id="goal-emoji" placeholder="Ex: 🏍️" maxlength="4">
     </div>
-
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Valor Total (Meta)</label>
@@ -1298,7 +924,6 @@ body {
         <input type="text" class="form-control" id="goal-atual" placeholder="R$ 0,00" oninput="maskMoney(this)" inputmode="numeric">
       </div>
     </div>
-
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Prazo (meses)</label>
@@ -1315,7 +940,6 @@ body {
         </select>
       </div>
     </div>
-
     <div class="btn-group">
       <button class="btn btn-primary btn-full" onclick="saveGoal()"><i class="fas fa-check"></i> Salvar Meta</button>
     </div>
@@ -1397,9 +1021,6 @@ body {
 <!-- Toast Container -->
 <div id="toast-container"></div>
 
-<!-- ════════════════════════════════════════════════════
-     JAVASCRIPT
-════════════════════════════════════════════════════ -->
 <script>
 'use strict';
 /* ============================================================
@@ -1416,20 +1037,14 @@ const LS = {
    ============================================================ */
 let state = {
   transactions: LS.get('lf_transactions',[]),
-  bills:        LS.get('lf_bills',[]),
   goals:        LS.get('lf_goals',[]),
-  paidHistory:  LS.get('lf_paid_history',[]),
   catEntrada:   LS.get('lf_cat_entrada',['Salário da Vipal','Diária da pizzaria','Outros']),
   catSaida:     LS.get('lf_cat_saida',['Transporte','Alimentação','Lazer','Contas','Saúde','Compras','Educação','Outros']),
-  settings: LS.get('lf_settings',{name:'Lulis',currency:'BRL',sound:false}),
-  theme: LS.get('lf_theme','light'),
+  settings:     LS.get('lf_settings',{name:'Lulis',currency:'BRL',sound:false}),
+  theme:        LS.get('lf_theme','light'),
   currentTxType: 'entrada',
   editingTx: null,
-  editingBill: null,
   editingGoal: null,
-  billFilter: 'all',
-  calMonth: new Date().getMonth(),
-  calYear: new Date().getFullYear(),
 };
 
 /* ============================================================
@@ -1463,9 +1078,7 @@ function catColor(cat){return CAT_COLORS[cat]||'#94a3b8'}
    ============================================================ */
 function saveState(){
   LS.set('lf_transactions',state.transactions);
-  LS.set('lf_bills',state.bills);
   LS.set('lf_goals',state.goals);
-  LS.set('lf_paid_history',state.paidHistory);
   LS.set('lf_cat_entrada',state.catEntrada);
   LS.set('lf_cat_saida',state.catSaida);
   LS.set('lf_settings',state.settings);
@@ -1501,8 +1114,6 @@ function daysInMonth(y,m){return new Date(y,m,0).getDate()}
    ============================================================ */
 function applyTheme(t){
   document.documentElement.setAttribute('data-theme',t);
-  const icon=document.getElementById('theme-icon');
-  if(icon)icon.className=t==='dark'?'fas fa-sun':'fas fa-moon';
   const toggle=document.getElementById('dark-toggle');
   if(toggle)toggle.checked=(t==='dark');
 }
@@ -1521,12 +1132,10 @@ function switchTab(tab){
   document.getElementById('view-'+tab).classList.add('active');
   document.querySelectorAll(`[data-tab="${tab}"]`).forEach(n=>n.classList.add('active'));
   window.scrollTo(0,0);
-  // lazy render
   if(tab==='dashboard')renderDashboard();
   if(tab==='lancamentos')renderLancamentos();
   if(tab==='relatorios')renderRelatorios();
   if(tab==='metas')renderGoals();
-  if(tab==='boletos'){renderBills();renderMiniCal()}
 }
 document.querySelectorAll('.nav-item,.sidebar-item').forEach(btn=>{
   btn.addEventListener('click',()=>switchTab(btn.dataset.tab));
@@ -1562,11 +1171,9 @@ function toast(msg,type='success',dur=3000){
 function playBeep(type='success'){
   try{
     const ctx=new(window.AudioContext||window.webkitAudioContext)();
-    const osc=ctx.createOscillator();
-    const gain=ctx.createGain();
+    const osc=ctx.createOscillator();const gain=ctx.createGain();
     osc.connect(gain);gain.connect(ctx.destination);
-    osc.frequency.value=type==='success'?880:400;
-    osc.type='sine';
+    osc.frequency.value=type==='success'?880:400;osc.type='sine';
     gain.gain.setValueAtTime(.2,ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.3);
     osc.start();osc.stop(ctx.currentTime+.3);
@@ -1596,31 +1203,26 @@ function renderDashboard(){
   const mk=currentMonthKey();
   const prevMk=`${now.getFullYear()}-${String(now.getMonth()).padStart(2,'0')}`;
 
-  // month transactions
   const mTx=state.transactions.filter(t=>monthKey(t.date)===mk);
   const entrada=mTx.filter(t=>t.type==='entrada').reduce((s,t)=>s+t.amount,0);
   const saida=mTx.filter(t=>t.type==='saida').reduce((s,t)=>s+t.amount,0);
   const saldo=state.transactions.reduce((s,t)=>t.type==='entrada'?s+t.amount:s-t.amount,0);
   const economia=entrada-saida;
 
-  // prev month
   const pTx=state.transactions.filter(t=>monthKey(t.date)===prevMk);
   const pEntrada=pTx.filter(t=>t.type==='entrada').reduce((s,t)=>s+t.amount,0);
   const pSaida=pTx.filter(t=>t.type==='saida').reduce((s,t)=>s+t.amount,0);
 
-  // weekly
   const weekStart=new Date(now);weekStart.setDate(now.getDate()-now.getDay());
   const weekTx=state.transactions.filter(t=>{const d=new Date(t.date+'T00:00:00');return d>=weekStart&&t.type==='saida'});
   const weekOut=weekTx.reduce((s,t)=>s+t.amount,0);
 
-  // forecast
   const daysTotal=daysInMonth(now.getFullYear(),now.getMonth()+1);
   const daysPassed=now.getDate();
   const avgDaily=daysPassed>0?saida/daysPassed:0;
   const forecastSaida=avgDaily*daysTotal;
   const forecastSaldo=saldo-(forecastSaida-saida);
 
-  // update UI
   document.getElementById('dash-saldo').textContent=fmtMoney(saldo);
   document.getElementById('dash-saldo-sub').textContent=saldo>=0?'Saldo positivo ✅':'Saldo negativo ⚠️';
   document.getElementById('dash-saldo-sub').className='sc-sub '+(saldo>=0?'up':'down');
@@ -1635,22 +1237,13 @@ function renderDashboard(){
   if(pEntrada>0){const d=((entrada-pEntrada)/pEntrada*100).toFixed(0);document.getElementById('dash-entrada-sub').textContent=`${d>0?'+':''}${d}% vs mês anterior`}
   if(pSaida>0){const d=((saida-pSaida)/pSaida*100).toFixed(0);document.getElementById('dash-saida-sub').textContent=`${d>0?'+':''}${d}% vs mês anterior`}
 
-  // motivational
   const mot=MOTIVATIONAL[Math.floor(Date.now()/86400000)%MOTIVATIONAL.length];
   document.getElementById('motivational-text').textContent=mot.text;
   document.getElementById('motivational-sub').textContent=mot.sub;
 
-  // alerts
   renderSmartAlerts(entrada,saida,economia);
-
-  // charts
   renderPizzaChart(mTx);
   renderBarrasChart();
-
-  // upcoming bills
-  renderUpcomingBills();
-
-  // recent tx
   renderRecentTx();
 }
 
@@ -1662,30 +1255,10 @@ function renderSmartAlerts(entrada,saida,economia){
   if(entrada>0&&saida>entrada*0.9)alerts.push({type:'danger',icon:'fa-exclamation-triangle',msg:`<b>Atenção!</b> Você já gastou ${((saida/entrada)*100).toFixed(0)}% da sua renda este mês.`});
   else if(entrada>0&&saida>entrada*0.7)alerts.push({type:'warning',icon:'fa-exclamation-circle',msg:`<b>Cuidado!</b> Você gastou ${((saida/entrada)*100).toFixed(0)}% da sua renda este mês. Fique de olho!`});
 
-  // bill alerts
-  const today2=new Date();today2.setHours(0,0,0,0);
-  const tom=new Date(today2);tom.setDate(tom.getDate()+1);
-  state.bills.filter(b=>b.status!=='paid'&&b.tipo!=='done').forEach(b=>{
-    const dv=getBillDueDate(b);
-    if(!dv)return;
-    const dvDate=new Date(dv+'T00:00:00');
-    if(dvDate<today2)alerts.push({type:'danger',icon:'fa-clock',msg:`<b>Boleto atrasado:</b> ${b.nome} — ${fmtMoney(b.valor)} venceu em ${fmtDate(dv)}`});
-    else if(dvDate.toDateString()===today2.toDateString())alerts.push({type:'warning',icon:'fa-bell',msg:`<b>Vence hoje:</b> ${b.nome} — ${fmtMoney(b.valor)}`});
-    else if(dvDate.toDateString()===tom.toDateString())alerts.push({type:'info',icon:'fa-bell',msg:`<b>Vence amanhã:</b> ${b.nome} — ${fmtMoney(b.valor)}`});
-  });
-
-  // bill commitment
-  const totalBills=state.bills.filter(b=>b.status!=='paid'&&b.tipo!=='done').reduce((s,b)=>s+b.valor,0);
-  if(entrada>0&&totalBills>0){
-    const pct=((totalBills/entrada)*100).toFixed(0);
-    alerts.push({type:'info',icon:'fa-chart-pie',msg:`Você comprometeu <b>${pct}%</b> da sua renda com boletos/parcelas.`});
-  }
-
-  // lazer suggestion
   const lazerSaida=state.transactions.filter(t=>monthKey(t.date)===currentMonthKey()&&t.type==='saida'&&t.category==='Lazer').reduce((s,t)=>s+t.amount,0);
   if(entrada>0&&lazerSaida>entrada*0.2)alerts.push({type:'warning',icon:'fa-gamepad',msg:`Sugestão: Você gastou <b>${fmtMoney(lazerSaida)}</b> com Lazer este mês. Considere reduzir um pouco 🎯`});
 
-  alerts.slice(0,4).forEach(a=>{
+  alerts.slice(0,3).forEach(a=>{
     const d=document.createElement('div');
     d.className=`alert-banner ${a.type}`;
     d.innerHTML=`<i class="fas ${a.icon}"></i><div>${a.msg}</div>`;
@@ -1700,7 +1273,6 @@ function renderPizzaChart(mTx){
   const labels=Object.keys(byCat);
   const data=Object.values(byCat);
   const colors=labels.map(l=>catColor(l));
-
   const ctx=document.getElementById('chart-pizza');
   if(chartPizza)chartPizza.destroy();
   if(labels.length===0){ctx.parentElement.innerHTML='<div class="empty-state" style="padding:30px"><i class="fas fa-chart-pie"></i><p>Sem dados de saídas</p></div>';return}
@@ -1731,23 +1303,6 @@ function renderBarrasChart(){
 
 function getCSSVar(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
 
-function renderUpcomingBills(){
-  const cont=document.getElementById('upcoming-bills-list');
-  const today2=new Date();today2.setHours(0,0,0,0);
-  const soon=state.bills.filter(b=>getBillStatus(b)!=='paid').map(b=>({b,dv:getBillDueDate(b)})).filter(x=>x.dv).sort((a,b)=>a.dv.localeCompare(b.dv)).slice(0,4);
-  if(!soon.length){cont.innerHTML=`<div class="empty-state" style="padding:24px"><i class="fas fa-check-circle"></i><p>Nenhum boleto próximo 🎉</p></div>`;return}
-  cont.innerHTML=soon.map(({b,dv})=>{
-    const dvDate=new Date(dv+'T00:00:00');
-    const diff=Math.round((dvDate-today2)/86400000);
-    const tag=diff<0?'<span class="bill-badge badge-overdue">Vencido</span>':diff===0?'<span class="bill-badge badge-pending">Hoje!</span>':diff===1?'<span class="bill-badge badge-pending">Amanhã</span>':`<span class="bill-badge" style="background:var(--bg3);color:var(--text2)">Em ${diff}d</span>`;
-    return`<div class="tx-item">
-      <div class="tx-icon saida" style="background:${diff<0?'#fee2e2':'#fef3c7'};color:${diff<0?'var(--red)':'#92400e'}">${catIcon(b.categoria)}</div>
-      <div class="tx-info"><div class="tx-desc">${b.nome}</div><div class="tx-cat">${b.categoria}</div></div>
-      <div style="text-align:right">${tag}<div class="tx-amount saida" style="margin-top:4px">${fmtMoney(b.valor)}</div></div>
-    </div>`
-  }).join('');
-}
-
 function renderRecentTx(){
   const cont=document.getElementById('recent-tx-list');
   const recent=[...state.transactions].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6);
@@ -1759,7 +1314,7 @@ function txCard(tx){
   const icon=catIcon(tx.category);
   const sign=tx.type==='entrada'?'+':'-';
   return`<div class="tx-item">
-    <div class="tx-icon ${tx.type}" style="background:${tx.type==='entrada'?'var(--green-100)':'#fee2e2'};color:${tx.type==='entrada'?'var(--primary)':'var(--red)'}">${icon}</div>
+    <div class="tx-icon ${tx.type}">${icon}</div>
     <div class="tx-info"><div class="tx-desc">${tx.desc||tx.category}</div><div class="tx-cat">${tx.category} • ${fmtDate(tx.date)}</div></div>
     <div style="text-align:right">
       <div class="tx-amount ${tx.type}">${sign}${fmtMoney(tx.amount)}</div>
@@ -1777,13 +1332,11 @@ function renderLancamentos(){
   const filterCat=document.getElementById('tx-filter-cat').value;
   const sort=document.getElementById('tx-sort').value;
 
-  // populate month filter
   const months=[...new Set(state.transactions.map(t=>monthKey(t.date)))].sort().reverse();
   const mSel=document.getElementById('tx-filter-month');
   const mVal=mSel.value;
   mSel.innerHTML='<option value="">Todos os meses</option>'+months.map(m=>`<option value="${m}"${mVal===m?' selected':''}>${monthLabel(m)}</option>`).join('');
 
-  // populate cat filter
   const cats=[...new Set(state.transactions.map(t=>t.category))].sort();
   const cSel=document.getElementById('tx-filter-cat');
   const cVal=cSel.value;
@@ -1804,7 +1357,7 @@ function renderLancamentos(){
   const cont=document.getElementById('tx-list-container');
   if(!txs.length){cont.innerHTML=`<div class="empty-state"><i class="fas fa-receipt"></i><h3>Nenhum lançamento encontrado</h3><p>Toque no + para adicionar.</p></div>`;return}
   cont.innerHTML=txs.map(tx=>`
-    <div class="tx-item" style="position:relative">
+    <div class="tx-item">
       <div class="tx-icon ${tx.type}">${catIcon(tx.category)}</div>
       <div class="tx-info">
         <div class="tx-desc">${tx.desc||tx.category}</div>
@@ -1828,7 +1381,6 @@ function openTxModal(id=null){
   document.getElementById('tx-desc').value='';
   document.getElementById('new-cat-group').classList.add('hidden');
   document.getElementById('tx-new-cat').value='';
-
   if(id){
     const tx=state.transactions.find(t=>t.id===id);
     if(tx){
@@ -1838,9 +1390,7 @@ function openTxModal(id=null){
       document.getElementById('tx-desc').value=tx.desc||'';
       updateCatOptions(tx.type,tx.category);
     }
-  }else{
-    setTxType('entrada');
-  }
+  }else{setTxType('entrada')}
   openModal('tx-modal');
 }
 function closeTxModal(){closeModal('tx-modal');state.editingTx=null}
@@ -1857,8 +1407,6 @@ function setTxType(type){
   state.currentTxType=type;
   document.getElementById('btn-entrada').classList.toggle('active',type==='entrada');
   document.getElementById('btn-saida').classList.toggle('active',type==='saida');
-  document.getElementById('btn-entrada').classList.toggle('entrada',true);
-  document.getElementById('btn-saida').classList.toggle('saida',true);
   updateCatOptions(type);
 }
 
@@ -1898,7 +1446,6 @@ function saveTx(){
     state.transactions.push({id:uid(),type:state.currentTxType,amount:valor,date:data,category:finalCat,desc});
     toast('Lançamento salvo 💚');
   }
-
   saveState();closeTxModal();renderDashboard();renderLancamentos();
 }
 
@@ -1907,7 +1454,6 @@ function saveTx(){
    ============================================================ */
 let chartRepPizza=null,chartRepHist=null;
 function renderRelatorios(){
-  // populate month selector
   const months=[...new Set(state.transactions.map(t=>monthKey(t.date)))].sort().reverse();
   const sel=document.getElementById('report-month');
   const cur=sel.value||currentMonthKey();
@@ -1920,11 +1466,9 @@ function renderRelatorios(){
   const entrada=txs.filter(t=>t.type==='entrada').reduce((s,t)=>s+t.amount,0);
   const saida=txs.filter(t=>t.type==='saida').reduce((s,t)=>s+t.amount,0);
 
-  // avg daily
   const dInM=daysInMonth(parseInt(mk.split('-')[0]),parseInt(mk.split('-')[1]));
   const avgD=saida/dInM;
 
-  // biggest cat
   const byCat={};txs.filter(t=>t.type==='saida').forEach(t=>{byCat[t.category]=(byCat[t.category]||0)+t.amount});
   const topCat=Object.entries(byCat).sort((a,b)=>b[1]-a[1])[0];
 
@@ -1933,7 +1477,6 @@ function renderRelatorios(){
   document.getElementById('rep-media-dia').textContent=fmtMoney(avgD);
   document.getElementById('rep-maior-cat').textContent=topCat?`${catIcon(topCat[0])} ${topCat[0]}`:'—';
 
-  // pizza
   const ctx1=document.getElementById('chart-rep-pizza');
   if(chartRepPizza)chartRepPizza.destroy();
   const labels=Object.keys(byCat),data=Object.values(byCat),colors=labels.map(l=>catColor(l));
@@ -1941,7 +1484,6 @@ function renderRelatorios(){
     chartRepPizza=new Chart(ctx1,{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:0,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:10,color:getCSSVar('--text2')}},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${fmtMoney(ctx.raw)}`}}},cutout:'65%'}});
   }else{ctx1.parentElement.innerHTML='<div class="empty-state" style="padding:20px"><i class="fas fa-chart-pie"></i><p>Sem saídas este mês</p></div>'}
 
-  // hist
   const histMonths=[];const now=new Date();
   for(let i=5;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1);histMonths.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`)}
   const hE=histMonths.map(m=>state.transactions.filter(t=>monthKey(t.date)===m&&t.type==='entrada').reduce((s,t)=>s+t.amount,0));
@@ -1950,7 +1492,6 @@ function renderRelatorios(){
   if(chartRepHist)chartRepHist.destroy();
   chartRepHist=new Chart(ctx2,{type:'bar',data:{labels:histMonths.map(monthLabel),datasets:[{label:'Entradas',data:hE,backgroundColor:'rgba(29,185,84,.8)',borderRadius:6},{label:'Saídas',data:hS,backgroundColor:'rgba(239,68,68,.8)',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:10,color:getCSSVar('--text2')}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fmtMoney(ctx.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:getCSSVar('--text3'),font:{size:10}}},y:{grid:{color:getCSSVar('--border')},ticks:{color:getCSSVar('--text3'),font:{size:10},callback:v=>'R$'+v.toLocaleString('pt-BR')}}}}});
 
-  // table
   const sorted=[...txs].sort((a,b)=>b.date.localeCompare(a.date));
   document.getElementById('rep-tbody').innerHTML=sorted.map(t=>`
     <tr><td>${fmtDate(t.date)}</td>
@@ -1986,7 +1527,7 @@ function renderGoals(){
     return;
   }
   cont.innerHTML=state.goals.map(g=>{
-    const pct = g.total > 0 ? Math.min(100, Math.round((g.atual / g.total) * 100)) : 0;
+    const pct=g.total>0?Math.min(100,Math.round((g.atual/g.total)*100)):0;
     const falta=g.total-g.atual;
     const meses=g.prazo||12;
     const porMes=falta>0?falta/meses:0;
@@ -2011,7 +1552,7 @@ function renderGoals(){
         <span class="goal-target">de ${fmtMoney(g.total)}</span>
         ${done?'<span class="bill-badge badge-paid">🎉 Concluída!</span>':''}
       </div>
-      <div class="progress-bar mb-8"><div class="progress-fill ${g.color||'green'}" style="width: ${pct}%"></div></div>
+      <div class="progress-bar mb-8"><div class="progress-fill ${g.color||'green'}" style="width:${pct}%"></div></div>
       <div class="goal-meta">
         <span><b>${pct}%</b> concluído</span>
         ${!done?`<span>Falta: <b>${fmtMoney(falta)}</b></span>`:''}
@@ -2071,7 +1612,6 @@ function saveGoal(){
 }
 
 function openGoalDeposit(id){
-  state.editingGoal=id;
   document.getElementById('goal-deposit-val').value='';
   document.getElementById('goal-deposit-id').value=id;
   openModal('goal-deposit-modal');
@@ -2098,316 +1638,12 @@ function deleteGoal(id){
 }
 
 /* ============================================================
-   BOLETOS / PARCELAS
-   ============================================================ */
-function getBillDueDate(b){
-  if(!b.diaVenc)return null;
-  const now=new Date();
-  const day=parseInt(b.diaVenc);
-  // find next occurrence
-  const y=now.getFullYear();const m=now.getMonth()+1;
-  const maxDay=daysInMonth(y,m);
-  const d=Math.min(day,maxDay);
-  return`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-}
-
-function getBillStatus(b) {
-  if (b.status === 'paid' || b.tipo === 'done' || b.pago === true) return 'paid';
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const dv = getBillDueDate(b);
-  if (!dv) return 'pending';
-  const dvDate = new Date(dv + 'T00:00:00');
-  if (dvDate < today) return 'overdue';
-  return 'pending';
-}
-
-function renderBills(){
-  // summary
-  const active=state.bills.filter(b=>b.tipo!=='done');
-  const totalRest=active.reduce((s,b)=>{
-    if(b.tipo==='parcelado'){const left=(b.totalParcelas-b.parcAtual+1);return s+b.valor*Math.max(0,left)}
-    return s+b.valor;
-  },0);
-  const nextMonth=active.reduce((s,b)=>s+b.valor,0);
-  const paidYear=state.paidHistory.filter(p=>{const d=new Date(p.paidAt);return d.getFullYear()===new Date().getFullYear()}).length;
-
-  document.getElementById('bill-count').textContent=active.length;
-  document.getElementById('bill-total-rest').textContent=fmtMoney(totalRest);
-  document.getElementById('bill-next-month').textContent=fmtMoney(nextMonth);
-  document.getElementById('bill-paid-year').textContent=paidYear;
-
-  // filter
-  let bills=[...state.bills];
-  switch(state.billFilter){
-    case'pending':bills=bills.filter(b=>getBillStatus(b)==='pending');break;
-    case'overdue':bills=bills.filter(b=>getBillStatus(b)==='overdue');break;
-    case'paid':bills=bills.filter(b=>b.status==='paid'||b.tipo==='done');break;
-    case'expensive':bills.sort((a,b)=>b.valor-a.valor);break;
-    case'ending':bills=bills.filter(b=>b.tipo==='parcelado'&&(b.totalParcelas-b.parcAtual)<=2);break;
-    default:bills=bills.filter(b=>b.tipo!=='done');
-  }
-
-  const cont=document.getElementById('bills-list');
-  if(!bills.length){cont.innerHTML=`<div class="empty-state"><i class="fas fa-file-invoice-dollar"></i><h3>Nenhum boleto encontrado</h3><p>Toque no + para adicionar.</p></div>`;return}
-
-  cont.innerHTML=bills.map(b=>{
-    const status=getBillStatus(b);
-    const dv=getBillDueDate(b);
-    const today2=new Date();today2.setHours(0,0,0,0);
-    const dvDate=dv?new Date(dv+'T00:00:00'):null;
-    const diff=dvDate?Math.round((dvDate-today2)/86400000):null;
-
-    const badgeClass={paid:'badge-paid',overdue:'badge-overdue',pending:'badge-pending',advanced:'badge-advanced'}[status]||'badge-pending';
-    const badgeText={paid:'✅ Pago',overdue:'⚠️ Vencido',pending:'🕐 Pendente',advanced:'⏩ Adiantado'}[status]||'Pendente';
-
-    let pct=0,parcInfo='';
-    if(b.tipo==='parcelado'){
-      pct=Math.round((b.parcAtual-1)/b.totalParcelas*100);
-      const left=b.totalParcelas-b.parcAtual+1;
-      const totalLeft=b.valor*Math.max(0,left);
-      parcInfo=`<div class="bill-info-item"><div class="lbl">Parcela</div><div class="val">${b.parcAtual}/${b.totalParcelas}</div></div>
-                <div class="bill-info-item"><div class="lbl">Falta pagar</div><div class="val">${fmtMoney(totalLeft)}</div></div>`;
-    }else if(b.tipo==='recorrente'){
-      parcInfo=`<div class="bill-info-item"><div class="lbl">Tipo</div><div class="val">Recorrente</div></div>`;
-    }else{
-      parcInfo=`<div class="bill-info-item"><div class="lbl">Tipo</div><div class="val">Parcela Única</div></div>`;
-    }
-
-    const vencText=diff===null?'—':diff<0?`Venceu há ${Math.abs(diff)}d`:diff===0?'Vence hoje':diff===1?'Vence amanhã':`Vence em ${diff}d`;
-
-    return`<div class="bill-card">
-      <div class="bill-header">
-        <div>
-          <div class="bill-name">${b.nome}</div>
-          <div class="bill-cat">${catIcon(b.categoria)} ${b.categoria}</div>
-        </div>
-        <span class="bill-badge ${badgeClass}">${badgeText}</span>
-      </div>
-      <div class="bill-info">
-        <div class="bill-info-item"><div class="lbl">Valor</div><div class="val">${fmtMoney(b.valor)}</div></div>
-        <div class="bill-info-item"><div class="lbl">Vencimento</div><div class="val">${vencText}</div></div>
-        ${parcInfo}
-      </div>
-      ${b.tipo==='parcelado'?`<div class="progress-bar mb-16"><div class="progress-fill ${pct>80?'red':pct>50?'yellow':'green'}" style="width: ${pct}%"></div></div>
-      <div style="font-size:.72rem;color:var(--text3);margin-top:-10px;margin-bottom:12px">${b.parcAtual-1} de ${b.totalParcelas} parcelas pagas (${pct}%)</div>`:''}
-      <div class="bill-actions">
-        ${status!=='paid'?`<button class="btn btn-primary btn-sm" onclick="markPaid('${b.id}')"><i class="fas fa-check"></i> Pago</button>`:''}
-        ${status==='paid'?`<button class="btn btn-secondary btn-sm" onclick="markPending('${b.id}')"><i class="fas fa-undo"></i> Desfazer</button>`:''}
-        ${b.tipo==='parcelado'?`<button class="btn btn-secondary btn-sm" onclick="advanceParc('${b.id}')"><i class="fas fa-forward"></i></button>
-        <button class="btn btn-secondary btn-sm" onclick="backParc('${b.id}')"><i class="fas fa-backward"></i></button>`:''}
-        <button class="btn btn-secondary btn-sm btn-icon" onclick="openBillModal('${b.id}')"><i class="fas fa-edit"></i></button>
-        ${b.tipo==='parcelado'?`<button class="btn btn-secondary btn-sm" onclick="quitAll('${b.id}')"><i class="fas fa-check-double"></i> Quitar</button>`:''}
-        <button class="btn btn-danger btn-sm btn-icon" onclick="deleteBill('${b.id}')"><i class="fas fa-trash"></i></button>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function setBillFilter(el,filter){
-  document.querySelectorAll('#bill-filters .filter-chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  state.billFilter=filter;
-  renderBills();
-}
-
-function openBillModal(id=null){
-  state.editingBill=id;
-  document.getElementById('bill-modal-title').textContent=id?'Editar Boleto':'Novo Boleto';
-  if(id){
-    const b=state.bills.find(x=>x.id===id);
-    if(b){
-      document.getElementById('bill-nome').value=b.nome;
-      document.getElementById('bill-cat').value=b.categoria;
-      document.getElementById('bill-tipo').value=b.tipo;
-      document.getElementById('bill-valor').value=fmtMoney(b.valor);
-      document.getElementById('bill-dia-venc').value=b.diaVenc;
-      document.getElementById('bill-total-parc').value=b.totalParcelas||'';
-      document.getElementById('bill-parc-atual').value=b.parcAtual||'';
-      document.getElementById('bill-inicio').value=b.inicio||today();
-      document.getElementById('bill-desc').value=b.desc||'';
-      handleBillTipo();
-    }
-  }else{
-    document.getElementById('bill-nome').value='';
-    document.getElementById('bill-cat').value='Outros';
-    document.getElementById('bill-tipo').value='parcelado';
-    document.getElementById('bill-valor').value='';
-    document.getElementById('bill-dia-venc').value='';
-    document.getElementById('bill-total-parc').value='';
-    document.getElementById('bill-parc-atual').value='1';
-    document.getElementById('bill-inicio').value=today();
-    document.getElementById('bill-desc').value='';
-    handleBillTipo();
-  }
-  openModal('bill-modal');
-}
-function closeBillModal(){closeModal('bill-modal');state.editingBill=null}
-
-function handleBillTipo(){
-  const tipo=document.getElementById('bill-tipo').value;
-  document.getElementById('bill-parcelas-row').style.display=(tipo==='parcelado')?'':'none';
-}
-
-function saveBill(){
-  const nome=document.getElementById('bill-nome').value.trim();
-  const categoria=document.getElementById('bill-cat').value;
-  const tipo=document.getElementById('bill-tipo').value;
-  const valor=parseMoney(document.getElementById('bill-valor').value);
-  const diaVenc=parseInt(document.getElementById('bill-dia-venc').value);
-  const totalParcelas=parseInt(document.getElementById('bill-total-parc').value)||1;
-  const parcAtual=parseInt(document.getElementById('bill-parc-atual').value)||1;
-  const inicio=document.getElementById('bill-inicio').value||today();
-  const desc=document.getElementById('bill-desc').value.trim();
-
-  if(!nome)return toast('Digite o nome do boleto','error');
-  if(!valor||valor<=0)return toast('Digite o valor','error');
-  if(!diaVenc||diaVenc<1||diaVenc>31)return toast('Dia de vencimento inválido (1-31)','error');
-
-  if(state.editingBill){
-    const idx=state.bills.findIndex(b=>b.id===state.editingBill);
-    if(idx>=0)state.bills[idx]={...state.bills[idx],nome,categoria,tipo,valor,diaVenc,totalParcelas,parcAtual,inicio,desc};
-    toast('Boleto atualizado ✅');
-  }else{
-    state.bills.push({id:uid(),nome,categoria,tipo,valor,diaVenc,totalParcelas,parcAtual,inicio,desc,status:'pending'});
-    toast('Boleto adicionado 💚');
-  }
-  saveState();closeBillModal();renderBills();renderMiniCal();renderDashboard();
-}
-
-function markPaid(id){
-  const idx=state.bills.findIndex(b=>b.id===id);
-  if(idx<0)return;
-  const b=state.bills[idx];
-  // launch transaction
-  const mk=currentMonthKey();
-  state.transactions.push({id:uid(),type:'saida',amount:b.valor,date:today(),category:b.categoria,desc:`[Boleto] ${b.nome}`});
-  state.paidHistory.push({billId:id,paidAt:today(),valor:b.valor,nome:b.nome});
-
-  if(b.tipo==='parcelado'){
-    if(b.parcAtual>=b.totalParcelas){
-      state.bills[idx].tipo='done';
-      state.bills[idx].status='paid';
-      toast(`🎉 ${b.nome} quitado! Todas as parcelas pagas!`,'success',5000);
-      confetti();
-    }else{
-      state.bills[idx].parcAtual+=1;
-      state.bills[idx].status='pending';
-      toast(`Parcela ${b.parcAtual} marcada como paga ✅`);
-    }
-  }else if(b.tipo==='unico'){
-    state.bills[idx].tipo='done';
-    state.bills[idx].status='paid';
-    toast(`${b.nome} pago e quitado! ✅`);
-  }else{
-    state.bills[idx].status='paid';
-    toast(`${b.nome} marcado como pago ✅`);
-    // Monthly bills stay 'paid' until user manually resets via 'Desfazer'
-  }
-  saveState();renderBills();renderMiniCal();renderDashboard();
-}
-
-function markPending(id){
-  const idx=state.bills.findIndex(b=>b.id===id);
-  if(idx>=0){state.bills[idx].status='pending';saveState();renderBills();toast('Marcado como pendente')}
-}
-
-function advanceParc(id){
-  const idx=state.bills.findIndex(b=>b.id===id);
-  if(idx>=0&&state.bills[idx].parcAtual<state.bills[idx].totalParcelas){
-    state.bills[idx].parcAtual++;
-    saveState();renderBills();toast('Parcela adiantada ⏩');
-  }
-}
-function backParc(id){
-  const idx=state.bills.findIndex(b=>b.id===id);
-  if(idx>=0&&state.bills[idx].parcAtual>1){
-    state.bills[idx].parcAtual--;
-    saveState();renderBills();toast('Parcela voltada ⏪');
-  }
-}
-function quitAll(id){
-  openConfirmModal('Quitar Tudo','Deseja marcar todas as parcelas como pagas e quitar este boleto?',()=>{
-    const idx=state.bills.findIndex(b=>b.id===id);
-    if(idx>=0){
-      const b=state.bills[idx];
-      const remaining=b.totalParcelas-b.parcAtual+1;
-      for(let i=0;i<remaining;i++){
-        state.transactions.push({id:uid(),type:'saida',amount:b.valor,date:today(),category:b.categoria,desc:`[Quitação] ${b.nome}`});
-        state.paidHistory.push({billId:id,paidAt:today(),valor:b.valor,nome:b.nome});
-      }
-      state.bills[idx].parcAtual=b.totalParcelas;
-      state.bills[idx].tipo='done';
-      state.bills[idx].status='paid';
-      saveState();renderBills();renderDashboard();
-      toast('Boleto quitado! 🎉','success',5000);confetti();
-    }
-  });
-}
-function deleteBill(id){
-  openConfirmModal('Excluir Boleto','Tem certeza que deseja excluir este boleto?',()=>{
-    state.bills=state.bills.filter(b=>b.id!==id);
-    saveState();renderBills();renderMiniCal();renderDashboard();
-    toast('Boleto excluído','warning');
-  });
-}
-
-/* ============================================================
-   MINI CALENDAR
-   ============================================================ */
-function renderMiniCal(){
-  const months=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-  document.getElementById('cal-month-label').textContent=`${months[state.calMonth]} ${state.calYear}`;
-
-  const days=daysInMonth(state.calYear,state.calMonth+1);
-  const firstDay=new Date(state.calYear,state.calMonth,1).getDay();
-  const today2=new Date();
-
-  // bill days this month
-  const billDays={};
-  state.bills.filter(b=>b.tipo!=='done').forEach(b=>{
-    if(!b.diaVenc)return;
-    const d=Math.min(parseInt(b.diaVenc),days);
-    if(!billDays[d])billDays[d]={bills:[],paid:false};
-    billDays[d].bills.push(b);
-    if(b.status==='paid')billDays[d].paid=true;
-  });
-
-  const labels=['D','S','T','Q','Q','S','S'];
-  const grid=document.getElementById('cal-grid');
-  grid.innerHTML=labels.map(l=>`<div class="cal-day-label">${l}</div>`).join('');
-  // empty cells
-  for(let i=0;i<firstDay;i++)grid.innerHTML+=`<div class="cal-day"></div>`;
-  // day cells
-  for(let d=1;d<=days;d++){
-    const isToday=d===today2.getDate()&&state.calMonth===today2.getMonth()&&state.calYear===today2.getFullYear();
-    const bd=billDays[d];
-    const past=new Date(state.calYear,state.calMonth,d)<today2;
-    let cls='cal-day';
-    if(isToday)cls+=' today';
-    else if(bd){cls+=bd.paid?' paid-day':past?' overdue':' has-bill';}
-    const dot=bd&&!isToday?`<span class="cal-dot"></span>`:'';
-    grid.innerHTML+=`<div class="${cls}">${d}${dot}</div>`;
-  }
-}
-function calPrev(){
-  if(state.calMonth===0){state.calMonth=11;state.calYear--}else state.calMonth--;
-  renderMiniCal();
-}
-function calNext(){
-  if(state.calMonth===11){state.calMonth=0;state.calYear++}else state.calMonth++;
-  renderMiniCal();
-}
-
-/* ============================================================
    BACKUP
    ============================================================ */
 function downloadBackup(){
   const data={
     lf_transactions:state.transactions,
-    lf_bills:state.bills,
     lf_goals:state.goals,
-    lf_paid_history:state.paidHistory,
     lf_cat_entrada:state.catEntrada,
     lf_cat_saida:state.catSaida,
     lf_settings:state.settings,
@@ -2431,15 +1667,12 @@ function importBackup(e){
       const data=JSON.parse(ev.target.result);
       openConfirmModal('Importar Backup','Isso irá substituir todos os dados atuais pelos dados do backup. Deseja continuar?',()=>{
         if(data.lf_transactions)state.transactions=data.lf_transactions;
-        if(data.lf_bills)state.bills=data.lf_bills;
         if(data.lf_goals)state.goals=data.lf_goals;
-        if(data.lf_paid_history)state.paidHistory=data.lf_paid_history;
         if(data.lf_cat_entrada)state.catEntrada=data.lf_cat_entrada;
         if(data.lf_cat_saida)state.catSaida=data.lf_cat_saida;
         if(data.lf_settings)state.settings=data.lf_settings;
         if(data.lf_theme){state.theme=data.lf_theme;applyTheme(state.theme)}
-        saveState();
-        updateSettingsUI();
+        saveState();updateSettingsUI();
         toast('Backup importado com sucesso! ✅','success',5000);
         renderDashboard();
       });
@@ -2451,7 +1684,7 @@ function importBackup(e){
 
 function resetApp(){
   openConfirmModal('⚠️ Resetar Aplicativo','ATENÇÃO: Esta ação irá apagar TODOS os dados permanentemente. Faça backup antes! Tem certeza?',()=>{
-    ['lf_transactions','lf_bills','lf_goals','lf_paid_history','lf_cat_entrada','lf_cat_saida','lf_settings','lf_theme'].forEach(k=>localStorage.removeItem(k));
+    ['lf_transactions','lf_goals','lf_cat_entrada','lf_cat_saida','lf_settings','lf_theme'].forEach(k=>localStorage.removeItem(k));
     location.reload();
   });
 }
@@ -2488,16 +1721,13 @@ function openCurrencyModal(){
 function closeCurrencyModal(){closeModal('currency-modal')}
 function saveCurrency(){
   state.settings.currency=document.getElementById('cfg-currency-select').value;
-  saveState();updateSettingsUI();closeCurrencyModal();
-  renderDashboard();toast('Moeda atualizada ✅');
+  saveState();updateSettingsUI();closeCurrencyModal();renderDashboard();toast('Moeda atualizada ✅');
 }
 function saveSoundPref(){
   state.settings.sound=document.getElementById('sound-toggle').checked;
   saveState();
 }
-function clearCache(){
-  toast('Cache limpo com sucesso 🧹');
-}
+function clearCache(){toast('Cache limpo com sucesso 🧹')}
 
 /* ============================================================
    MODAL HELPERS
@@ -2505,7 +1735,6 @@ function clearCache(){
 function openModal(id){document.getElementById(id).classList.add('open')}
 function closeModal(id){document.getElementById(id).classList.remove('open')}
 
-// close modals on overlay click
 document.querySelectorAll('.modal-overlay').forEach(o=>{
   o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')});
 });
@@ -2524,16 +1753,13 @@ document.getElementById('confirm-action-btn').addEventListener('click',()=>{
 });
 
 /* ============================================================
-   INITIAL LOAD
+   INIT
    ============================================================ */
-
 function init(){
   applyTheme(state.theme);
   updateSettingsUI();
-  // populate month filter for lancamentos
   renderLancamentos();
   renderDashboard();
-  // init report month options
   const months=[...new Set(state.transactions.map(t=>monthKey(t.date)))].sort().reverse();
   const rSel=document.getElementById('report-month');
   if(months.length){
@@ -2541,7 +1767,6 @@ function init(){
   }else{
     rSel.innerHTML=`<option value="${currentMonthKey()}">${monthLabel(currentMonthKey())}</option>`;
   }
-  renderMiniCal();
 }
 
 init();
